@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ml_invest_app/pages/home_page.dart';
+import 'package:ml_invest_app/pages/list_page.dart';
+import 'package:ml_invest_app/utils/material_color.dart';
 import 'package:ml_invest_app/widgets/fab_bottom_app_bar.dart';
-import 'package:ml_invest_app/widgets/stocks_by_trend.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: createMaterialColor(Color.fromRGBO(97, 97, 97, 1)),
           scaffoldBackgroundColor: const Color.fromRGBO(48, 48, 48, 1)),
       home: const MyHomePage(),
     );
@@ -28,59 +30,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _lastSelected = 'TAB: 0';
+  int _index = 0;
+
+  final List<Widget> _children = [
+    HomePage(),
+    ListPage(),
+    Center(
+      child: Text("Third Page"),
+    ),
+    Center(
+      child: Text("Four Page"),
+    ),
+  ];
 
   void _selectedTab(int index) {
     setState(() {
-      _lastSelected = 'TAB: $index';
+      _index = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                pinned: true,
-                snap: false,
-                floating: false,
-                expandedHeight: 250.0,
-                backgroundColor: const Color.fromRGBO(97, 97, 97, 1),
-                flexibleSpace: FlexibleSpaceBar(
-                  title: const Text('ML Invest'),
-                  background: Container(
-                      padding: const EdgeInsets.only(top: 45),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: const [
-                          Image(
-                              image: AssetImage(
-                                  'assets/images/undraw_robotics_kep.png')),
-                        ],
-                      )),
-                ),
-              ),
-            ];
-          },
-          body: Container(
-            color: const Color.fromRGBO(48, 48, 48, 1),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                StocksByTrend(title: 'Tendência de alta'),
-                StocksByTrend(title: 'Neutro'),
-                StocksByTrend(title: 'Tendência de baixa'),
-              ],
-            ),
-          )),
+      body: _children[_index],
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        tooltip: 'Increment',
+        tooltip: 'Comparar',
         elevation: 2.0,
         backgroundColor: const Color.fromRGBO(84, 84, 84, 1),
         child: const Icon(Icons.currency_exchange,
@@ -97,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FABBottomAppBarItem(iconData: Icons.home, text: 'Home'),
           FABBottomAppBarItem(iconData: Icons.list, text: 'Lista'),
           FABBottomAppBarItem(iconData: Icons.account_circle, text: 'Conta'),
-          FABBottomAppBarItem(iconData: Icons.info, text: 'Info'),
+          FABBottomAppBarItem(iconData: Icons.info, text: 'Sobre'),
         ],
       ),
     );
