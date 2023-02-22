@@ -9,6 +9,7 @@ class ListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Lista de ações comparadas"),
       ),
+      body: Container(),
     );
   }
 }
