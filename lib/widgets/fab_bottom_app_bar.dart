@@ -9,18 +9,18 @@ class FABBottomAppBarItem {
 }
 
 class FABBottomAppBar extends StatefulWidget {
-  FABBottomAppBar({
-    super.key,
-    required this.items,
-    required this.centerItemText,
-    this.height = 60.0,
-    this.iconSize = 24.0,
-    required this.backgroundColor,
-    required this.color,
-    required this.selectedColor,
-    required this.notchedShape,
-    required this.onTabSelected,
-  }) {
+  FABBottomAppBar(
+      {super.key,
+      required this.items,
+      required this.centerItemText,
+      this.height = 60.0,
+      this.iconSize = 24.0,
+      required this.backgroundColor,
+      required this.color,
+      required this.selectedColor,
+      required this.notchedShape,
+      required this.onTabSelected,
+      required this.selectedIndex}) {
     assert(this.items.length == 2 || this.items.length == 4);
   }
   final List<FABBottomAppBarItem> items;
@@ -32,19 +32,15 @@ class FABBottomAppBar extends StatefulWidget {
   final Color selectedColor;
   final NotchedShape notchedShape;
   final ValueChanged<int> onTabSelected;
+  final int selectedIndex;
 
   @override
   State<StatefulWidget> createState() => FABBottomAppBarState();
 }
 
 class FABBottomAppBarState extends State<FABBottomAppBar> {
-  int _selectedIndex = 0;
-
   _updateIndex(int index) {
     widget.onTabSelected(index);
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   @override
@@ -93,7 +89,8 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     required int index,
     required ValueChanged<int> onPressed,
   }) {
-    Color color = _selectedIndex == index ? widget.selectedColor : widget.color;
+    Color color =
+        widget.selectedIndex == index ? widget.selectedColor : widget.color;
     return Expanded(
       child: SizedBox(
         height: widget.height,

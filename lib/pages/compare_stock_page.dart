@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
+import 'package:ml_invest_app/main.dart';
 import 'package:ml_invest_app/widgets/default_app_bar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../widgets/ticker_stock.dart';
-
-class DetailStockPage extends StatefulWidget {
-  const DetailStockPage({super.key});
+class CompareStockPage extends StatefulWidget {
+  const CompareStockPage({super.key});
 
   @override
-  State<DetailStockPage> createState() => _DetailStockPageState();
+  State<CompareStockPage> createState() => _CompareStockPageState();
 }
 
-class _DetailStockPageState extends State<DetailStockPage> {
+class _CompareStockPageState extends State<CompareStockPage> {
   late List<SalesData> _chartData;
   late TooltipBehavior _tooltipBehavior;
 
@@ -28,12 +29,17 @@ class _DetailStockPageState extends State<DetailStockPage> {
     return Scaffold(
       appBar: DefaultAppBar(
         title: Row(children: [
-          TickerStock(title: "AMER3"),
           Text(
-            "AMERICANAS ON NM",
+            "Comparando ações <NOMES>",
             style: TextStyle(fontSize: 14),
           ),
         ]),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            MyHomePage.navigateToHomePage(context, 1);
+          },
+        ),
       ),
       body: ListView(
         children: [
