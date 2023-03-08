@@ -8,6 +8,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CompareStockPage extends StatefulWidget {
   const CompareStockPage({super.key});
+  static const routeName = '/compareStock';
 
   @override
   State<CompareStockPage> createState() => _CompareStockPageState();

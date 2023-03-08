@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ml_invest_app/pages/compare_stock_page.dart';
+import 'package:ml_invest_app/pages/detail_stock_page.dart';
 import 'package:ml_invest_app/pages/home_page.dart';
 import 'package:ml_invest_app/pages/list_page.dart';
 import 'package:ml_invest_app/pages/select_compare_stock_page.dart';
 import 'package:ml_invest_app/utils/material_color.dart';
-import 'package:ml_invest_app/utils/nav.dart';
 import 'package:ml_invest_app/widgets/fab_bottom_app_bar.dart';
 
 void main() {
@@ -19,7 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: createMaterialColor(Color.fromRGBO(97, 97, 97, 1)),
           scaffoldBackgroundColor: const Color.fromRGBO(48, 48, 48, 1)),
-      home: const MyHomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MyHomePage(),
+        DetailStockPage.routeName: (context) => DetailStockPage(),
+        SelectCompareStock.routeName: (context) => SelectCompareStock(),
+        CompareStockPage.routeName: (context) => CompareStockPage()
+      },
     );
   }
 }
@@ -78,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          push(context, SelectCompareStock());
+          Navigator.pushNamed(context, SelectCompareStock.routeName);
         },
         tooltip: 'Comparar',
         elevation: 2.0,
