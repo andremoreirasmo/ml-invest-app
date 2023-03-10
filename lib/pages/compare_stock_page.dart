@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:ml_invest_app/main.dart';
+import 'package:ml_invest_app/models/home_page_enum.dart';
+import 'package:ml_invest_app/utils/routes.dart';
 import 'package:ml_invest_app/widgets/default_app_bar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CompareStockPage extends StatefulWidget {
   const CompareStockPage({super.key});
-  static const routeName = '/compareStock';
 
   @override
   State<CompareStockPage> createState() => _CompareStockPageState();
@@ -37,9 +38,8 @@ class _CompareStockPageState extends State<CompareStockPage> {
         ]),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            MyHomePage.navigateToHomePage(context, 1);
-          },
+          onPressed: () =>
+              Get.offAllNamed(Routes.home, arguments: HomePageEnum.list.index),
         ),
       ),
       body: ListView(

@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+import 'package:ml_invest_app/utils/routes.dart';
 import 'package:ml_invest_app/widgets/ticker_stock.dart';
-
-import '../pages/detail_stock_page.dart';
 
 class StocksByTrend extends StatelessWidget {
   const StocksByTrend({super.key, required this.title});
@@ -29,8 +29,7 @@ class StocksByTrend extends StatelessWidget {
             child: Material(
               type: MaterialType.transparency,
               child: InkWell(
-                onTap: () =>
-                    Navigator.pushNamed(context, DetailStockPage.routeName),
+                onTap: () => Get.toNamed(Routes.detailStock),
                 child: Container(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Row(

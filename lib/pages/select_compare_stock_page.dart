@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:ml_invest_app/pages/compare_stock_page.dart';
+import 'package:get/get.dart';
+import 'package:ml_invest_app/utils/routes.dart';
 import 'package:ml_invest_app/widgets/default_app_bar.dart';
 
 import '../widgets/ticker_stock.dart';
 
-class SelectCompareStock extends StatefulWidget {
-  const SelectCompareStock({super.key});
-  static const routeName = '/selectToCompareStock';
+class SelectCompareStockPage extends StatefulWidget {
+  const SelectCompareStockPage({super.key});
 
   @override
-  State<SelectCompareStock> createState() => _SelectCompareStockState();
+  State<SelectCompareStockPage> createState() => _SelectCompareStockPageState();
 }
 
-class _SelectCompareStockState extends State<SelectCompareStock> {
+class _SelectCompareStockPageState extends State<SelectCompareStockPage> {
   List<String> _options = ['Option 1', 'Option 2', 'Option 3'];
   List<String> _selectedOptions = [];
 
@@ -77,7 +77,7 @@ class _SelectCompareStockState extends State<SelectCompareStock> {
       floatingActionButton: _selectedOptions.length > 1
           ? FloatingActionButton(
               onPressed: () {
-                Navigator.pushNamed(context, CompareStockPage.routeName);
+                Get.offAndToNamed(Routes.compareStock);
               },
               tooltip: 'Comparar',
               elevation: 2.0,

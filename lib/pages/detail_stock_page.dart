@@ -7,7 +7,6 @@ import '../widgets/ticker_stock.dart';
 
 class DetailStockPage extends StatefulWidget {
   const DetailStockPage({super.key});
-  static const routeName = '/detailStock';
 
   @override
   State<DetailStockPage> createState() => _DetailStockPageState();

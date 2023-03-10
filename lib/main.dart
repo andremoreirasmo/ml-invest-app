@@ -1,49 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ml_invest_app/pages/compare_stock_page.dart';
 import 'package:ml_invest_app/pages/detail_stock_page.dart';
 import 'package:ml_invest_app/pages/home_page.dart';
 import 'package:ml_invest_app/pages/list_page.dart';
 import 'package:ml_invest_app/pages/select_compare_stock_page.dart';
 import 'package:ml_invest_app/utils/material_color.dart';
+import 'package:ml_invest_app/utils/routes.dart';
 import 'package:ml_invest_app/widgets/fab_bottom_app_bar.dart';
 
 void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          primarySwatch: createMaterialColor(Color.fromRGBO(97, 97, 97, 1)),
-          scaffoldBackgroundColor: const Color.fromRGBO(48, 48, 48, 1)),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => MyHomePage(),
-        DetailStockPage.routeName: (context) => DetailStockPage(),
-        SelectCompareStock.routeName: (context) => SelectCompareStock(),
-        CompareStockPage.routeName: (context) => CompareStockPage()
-      },
-    );
-  }
+  runApp(GetMaterialApp(
+    theme: ThemeData(
+        primarySwatch: createMaterialColor(Color.fromRGBO(97, 97, 97, 1)),
+        scaffoldBackgroundColor: const Color.fromRGBO(48, 48, 48, 1)),
+    initialRoute: '/',
+    getPages: [
+      GetPage(name: Routes.home, page: () => MyHomePage()),
+      GetPage(name: Routes.compareStock, page: () => CompareStockPage()),
+      GetPage(name: Routes.detailStock, page: () => DetailStockPage()),
+      GetPage(
+          name: Routes.selectToCompareStock,
+          page: () => SelectCompareStockPage()),
+    ],
+  ));
 }
 
 class MyHomePage extends StatefulWidget {
-  final int pageIndex;
-  const MyHomePage({super.key, this.pageIndex = 0});
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
-
-  static void navigateToHomePage(BuildContext context, int pageIndex) {
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (context) => MyHomePage(pageIndex: pageIndex)),
-        (Route<dynamic> route) => false);
-  }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -70,10 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @protected
   @mustCallSuper
   void initState() {
-    print('init' + widget.pageIndex.toString() + '' + _index.toString());
     super.initState();
-    if (widget.pageIndex != _index) {
-      _selectedTab(widget.pageIndex);
+    if (Get.arguments != null && Get.arguments != _index) {
+      _selectedTab(Get.arguments);
     }
   }
 
@@ -85,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, SelectCompareStock.routeName);
+          Get.toNamed(Routes.selectToCompareStock);
         },
         tooltip: 'Comparar',
         elevation: 2.0,
