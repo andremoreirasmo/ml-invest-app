@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:ml_invest_app/widgets/stocks_by_trend.dart';
+import 'package:get/get.dart';
+import 'package:ml_invest_app/pages/home/home_controller.dart';
+import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  HomeController dataController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,16 +45,18 @@ class HomePage extends StatelessWidget {
                 ),
               ];
             },
-            body: Container(
-              color: const Color.fromRGBO(48, 48, 48, 1),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  StocksByTrend(title: 'Tendência de alta'),
-                  StocksByTrend(title: 'Neutro'),
-                  StocksByTrend(title: 'Tendência de baixa'),
-                ],
-              ),
-            )));
+            body: Obx(() => dataController.isDataLoading.value
+                ? const Center(child: CircularProgressIndicator())
+                : Container(
+                    color: const Color.fromRGBO(48, 48, 48, 1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        StocksByTrend(title: 'Tendência de alta'),
+                        // StocksByTrend(title: 'Neutro'),
+                        // StocksByTrend(title: 'Tendência de baixa'),
+                      ],
+                    ),
+                  ))));
   }
 }

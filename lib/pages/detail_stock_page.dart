@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ml_invest_app/widgets/default_app_bar.dart';
+import 'package:ml_invest_app/shared/widgets/default_app_bar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../widgets/ticker_stock.dart';
+import '../shared/widgets/ticker_stock.dart';
 
 class DetailStockPage extends StatefulWidget {
   const DetailStockPage({super.key});

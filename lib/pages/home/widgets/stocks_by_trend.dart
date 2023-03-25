@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:ml_invest_app/utils/routes.dart';
-import 'package:ml_invest_app/widgets/ticker_stock.dart';
+import 'package:ml_invest_app/shared/utils/routes.dart';
+import 'package:ml_invest_app/shared/widgets/ticker_stock.dart';
 
 class StocksByTrend extends StatelessWidget {
   const StocksByTrend({super.key, required this.title});

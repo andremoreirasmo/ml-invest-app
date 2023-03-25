@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ml_invest_app/pages/compare_stock_page.dart';
 import 'package:ml_invest_app/pages/detail_stock_page.dart';
-import 'package:ml_invest_app/pages/home_page.dart';
+import 'package:ml_invest_app/pages/home/home_page.dart';
 import 'package:ml_invest_app/pages/list_page.dart';
 import 'package:ml_invest_app/pages/select_compare_stock_page.dart';
-import 'package:ml_invest_app/utils/material_color.dart';
-import 'package:ml_invest_app/utils/routes.dart';
-import 'package:ml_invest_app/widgets/fab_bottom_app_bar.dart';
+import 'package:ml_invest_app/shared/utils/material_color.dart';
+import 'package:ml_invest_app/shared/utils/routes.dart';
+import 'package:ml_invest_app/shared/widgets/fab_bottom_app_bar.dart';
 
 void main() {
   runApp(GetMaterialApp(

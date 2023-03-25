@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:ml_invest_app/models/home_page_enum.dart';
-import 'package:ml_invest_app/utils/routes.dart';
-import 'package:ml_invest_app/widgets/default_app_bar.dart';
+import 'package:ml_invest_app/shared/models/home_page_enum.dart';
+import 'package:ml_invest_app/shared/utils/routes.dart';
+import 'package:ml_invest_app/shared/widgets/default_app_bar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CompareStockPage extends StatefulWidget {

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:ml_invest_app/utils/routes.dart';
-import 'package:ml_invest_app/widgets/default_app_bar.dart';
+import 'package:ml_invest_app/shared/utils/routes.dart';
+import 'package:ml_invest_app/shared/widgets/default_app_bar.dart';
 
-import '../widgets/ticker_stock.dart';
+import '../shared/widgets/ticker_stock.dart';
 
 class SelectCompareStockPage extends StatefulWidget {
   const SelectCompareStockPage({super.key});
