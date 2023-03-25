@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedIndex: _index,
         items: [
           FABBottomAppBarItem(iconData: Icons.home, text: 'Home'),
-          FABBottomAppBarItem(iconData: Icons.list, text: 'Lista'),
+          FABBottomAppBarItem(iconData: Icons.history, text: 'Histórico'),
           FABBottomAppBarItem(iconData: Icons.account_circle, text: 'Conta'),
           FABBottomAppBarItem(iconData: Icons.info, text: 'Sobre'),
         ],
