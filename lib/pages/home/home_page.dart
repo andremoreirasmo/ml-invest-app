@@ -16,47 +16,61 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: NestedScrollView(
-            floatHeaderSlivers: true,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  pinned: true,
-                  snap: false,
-                  floating: false,
-                  expandedHeight: 250.0,
-                  backgroundColor: const Color.fromRGBO(97, 97, 97, 1),
-                  flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: false,
-                    titlePadding: const EdgeInsets.all(15),
-                    title: const Text('ML Invest'),
-                    background: Container(
-                        padding: const EdgeInsets.only(top: 45),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            Image(
-                                image: AssetImage(
-                                    'assets/images/undraw_robotics_kep.png')),
-                          ],
-                        )),
-                  ),
+      body: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                pinned: true,
+                snap: false,
+                floating: false,
+                expandedHeight: 250.0,
+                backgroundColor: const Color.fromRGBO(97, 97, 97, 1),
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: false,
+                  titlePadding: const EdgeInsets.all(15),
+                  title: const Text('ML Invest'),
+                  background: Container(
+                      padding: const EdgeInsets.only(top: 60),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: const [
+                          Image(
+                              image: AssetImage(
+                                  'assets/images/undraw_robotics_kep.png')),
+                        ],
+                      )),
                 ),
-              ];
-            },
-            body: Obx(() => dataController.isDataLoading.value
-                ? const Center(child: CircularProgressIndicator())
-                : Container(
-                    color: const Color.fromRGBO(48, 48, 48, 1),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        StocksByTrend(title: 'Tendência de alta'),
-                        // StocksByTrend(title: 'Neutro'),
-                        // StocksByTrend(title: 'Tendência de baixa'),
-                      ],
-                    ),
-                  ))));
+              ),
+            ];
+          },
+          body: Obx(() => dataController.isDataLoading.value
+              ? const Center(child: CircularProgressIndicator())
+              : RefreshIndicator(
+                  onRefresh: () => dataController.fethData(),
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      Container(
+                        color: const Color.fromRGBO(48, 48, 48, 1),
+                        padding: const EdgeInsets.only(bottom: 30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            StocksByTrend(
+                                title: 'Tendência de alta',
+                                stocks: dataController.stocks),
+                            StocksByTrend(
+                                title: 'Neutro', stocks: dataController.stocks),
+                            StocksByTrend(
+                                title: 'Tendência de baixa',
+                                stocks: dataController.stocks),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ))),
+    );
   }
 }

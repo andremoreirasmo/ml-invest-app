@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 
 import 'models/app_exceptions.dart';
@@ -10,13 +12,15 @@ class ErrorHandler {
       return;
     } else if (error is FetchDataException) {
       var message = error.details;
-      Get.snackbar('Erro', message ?? 'Erro inesperado.');
+      log(error.status.toString());
+      Get.snackbar(
+          'Erro', message ?? 'Infelizmente houve um problema inesperado.');
       return;
     } else if (error is ApiNotRespondingException) {
-      Get.snackbar('Erro', 'Erro de comunicação.');
+      Get.snackbar('Erro', 'Houve um problema na comunicação.');
       return;
     }
-    Get.snackbar('Erro', 'Erro ao realizar solicitação.');
+    Get.snackbar('Erro', 'Houve um problema ao realizar solicitação.');
     return;
   }
 }

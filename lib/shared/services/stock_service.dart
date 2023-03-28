@@ -12,7 +12,7 @@ class StockService {
 
   static String baseUri = '/stock';
 
-  Future<List<StockModel>> getAllStocks() async {
+  Future<List<StockModel>?> getAllStocks() async {
     var url = "${ApiUrl.url}$baseUri";
 
     try {
@@ -21,7 +21,7 @@ class StockService {
       return response.map((e) => StockModel.fromJson(e)).toList();
     } catch (error) {
       ErrorHandler.handleError(error);
-      rethrow;
+      return null;
     }
   }
 }

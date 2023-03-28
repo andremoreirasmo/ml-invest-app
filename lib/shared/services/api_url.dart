@@ -1,3 +1,3 @@
 class ApiUrl {
-  static const url = 'http://localhost:3000';
+  static const url = 'http://192.168.2.116:3000';
 }

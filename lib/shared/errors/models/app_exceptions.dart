@@ -20,13 +20,14 @@ class BadRequestException extends AppException {
 
 class FetchDataException extends AppException {
   FetchDataException([String? message, String? status, String? responseCode])
-      : super(message, responseCode, status, 'Erro inesperado.');
+      : super(message, responseCode, status, 'Houve um problema inesperado.');
 }
 
 class ApiNotRespondingException extends AppException {
   ApiNotRespondingException(
       [String? message, String? status, String? responseCode])
-      : super(message, responseCode, status, 'Erro de comunicação.');
+      : super(
+            message, responseCode, status, 'Houve um problema de comunicação.');
 }
 
 class UnauthorizedException extends AppException {
