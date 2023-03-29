@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        edgeOffset: 260,
+        edgeOffset: 26,
         onRefresh: () => dataController.fethData(),
         child: CustomScrollView(
           slivers: [
@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
             Obx(() {
               return dataController.isDataLoading.value
                   ? const SliverFillRemaining(
+                      hasScrollBody: false,
                       child: Center(child: CircularProgressIndicator()),
                     )
                   : SliverList(
