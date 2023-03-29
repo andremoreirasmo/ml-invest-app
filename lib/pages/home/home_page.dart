@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        edgeOffset: 26,
+        edgeOffset: 260,
         onRefresh: () => dataController.fethData(),
         child: CustomScrollView(
           slivers: [
