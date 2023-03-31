@@ -4,25 +4,23 @@ class StockModel {
   String? image;
   String? ticker;
   int? stockStatus;
+  double? value;
 
-  StockModel({this.id, this.name, this.image, this.ticker, this.stockStatus});
+  StockModel(
+      {this.id,
+      this.name,
+      this.image,
+      this.ticker,
+      this.stockStatus,
+      this.value});
 
   StockModel.fromJson(Map<String, dynamic> json) {
-    if (json["id"] is int) {
-      id = json["id"];
-    }
-    if (json["name"] is String) {
-      name = json["name"];
-    }
-    if (json["image"] is String) {
-      image = json["image"];
-    }
-    if (json["ticker"] is String) {
-      ticker = json["ticker"];
-    }
-    if (json["stockStatus"] is int) {
-      stockStatus = json["stockStatus"];
-    }
+    id = json["id"];
+    name = json["name"];
+    image = json["image"];
+    ticker = json["ticker"];
+    stockStatus = json["stockStatus"];
+    value = json["value"];
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +30,7 @@ class StockModel {
     _data["image"] = image;
     _data["ticker"] = ticker;
     _data["stockStatus"] = stockStatus;
+    _data["value"] = value;
     return _data;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GenerateWidgets {
+class WidgetUtil {
   static List<Widget> getWidgets(int amount, Function() getWidget) {
     List<Widget> widgets = [];
 
@@ -9,5 +9,9 @@ class GenerateWidgets {
     }
 
     return widgets;
+  }
+
+  static Widget showIfTrue(bool value, Widget widget) {
+    return (value) ? widget : const SizedBox.shrink();
   }
 }

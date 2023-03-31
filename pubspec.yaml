@@ -39,6 +39,7 @@ dependencies:
   get:
   http: ^0.13.5
   skeletons: ^0.0.3
+  intl:
 
 dev_dependencies:
   flutter_test:

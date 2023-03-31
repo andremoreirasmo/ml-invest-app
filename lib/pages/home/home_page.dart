@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:ml_invest_app/pages/home/home_controller.dart';
 import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend/skeleton_stocks_by_trend.dart';
 import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend/stocks_by_trend.dart';
-import 'package:ml_invest_app/shared/utils/generate_widgets.dart';
+import 'package:ml_invest_app/shared/models/trend_stock_enum.dart';
+import 'package:ml_invest_app/shared/utils/widget_util.dart';
 import 'package:skeletons/skeletons.dart';
 
 class HomePage extends StatefulWidget {
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                     themeMode: ThemeMode.dark,
                     isLoading: dataController.isDataLoading.value,
                     skeleton: Column(
-                        children: GenerateWidgets.getWidgets(
+                        children: WidgetUtil.getWidgets(
                             3, () => const SkeletonStocksByTrend())),
                     child: Container(
                       color: const Color.fromRGBO(48, 48, 48, 1),
@@ -64,15 +65,15 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           StocksByTrend(
-                            title: 'Tendência de alta',
+                            type: TrendStockEnum.upward,
                             stocks: dataController.stocks,
                           ),
                           StocksByTrend(
-                            title: 'Neutro',
+                            type: TrendStockEnum.stable,
                             stocks: dataController.stocks,
                           ),
                           StocksByTrend(
-                            title: 'Tendência de baixa',
+                            type: TrendStockEnum.downward,
                             stocks: dataController.stocks,
                           ),
                         ],

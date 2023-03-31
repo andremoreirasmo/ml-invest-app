@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ml_invest_app/shared/utils/generate_widgets.dart';
+import 'package:ml_invest_app/shared/utils/widget_util.dart';
 import 'package:ml_invest_app/shared/widgets/ticker_stock/skeleton_ticker_stocker.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -9,7 +9,6 @@ class SkeletonStocksByTrend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 500,
       padding: const EdgeInsets.only(top: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +29,7 @@ class SkeletonStocksByTrend extends StatelessWidget {
               right: 10,
             ),
             child: Column(
-              children: GenerateWidgets.getWidgets(2, () => _getStock()),
+              children: WidgetUtil.getWidgets(2, () => _getStock()),
             ),
           ),
         ],
