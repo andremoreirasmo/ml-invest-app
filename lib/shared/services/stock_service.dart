@@ -16,9 +16,12 @@ class StockService {
     var url = "${ApiUrl.url}$baseUri";
 
     try {
+      await Future<void>.delayed(const Duration(milliseconds: 1000));
       List<dynamic> response = await _http.get(url);
 
-      return response.map((e) => StockModel.fromJson(e)).toList();
+      var list = response.map((e) => StockModel.fromJson(e)).toList();
+
+      return list;
     } catch (error) {
       ErrorHandler.handleError(error);
       return null;

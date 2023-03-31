@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ml_invest_app/pages/home/home_controller.dart';
-import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend.dart';
+import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend/skeleton_stocks_by_trend.dart';
+import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend/stocks_by_trend.dart';
+import 'package:ml_invest_app/shared/utils/generate_widgets.dart';
+import 'package:skeletons/skeletons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -46,36 +49,38 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Obx(() {
-              return dataController.isDataLoading.value
-                  ? const SliverFillRemaining(
-                      hasScrollBody: false,
-                      child: Center(child: CircularProgressIndicator()),
-                    )
-                  : SliverList(
-                      delegate: SliverChildListDelegate.fixed([
-                        Container(
-                          color: const Color.fromRGBO(48, 48, 48, 1),
-                          padding: const EdgeInsets.only(bottom: 30),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              StocksByTrend(
-                                title: 'Tendência de alta',
-                                stocks: dataController.stocks,
-                              ),
-                              StocksByTrend(
-                                title: 'Neutro',
-                                stocks: dataController.stocks,
-                              ),
-                              StocksByTrend(
-                                title: 'Tendência de baixa',
-                                stocks: dataController.stocks,
-                              ),
-                            ],
+              return SliverList(
+                delegate: SliverChildListDelegate.fixed([
+                  Skeleton(
+                    themeMode: ThemeMode.dark,
+                    isLoading: dataController.isDataLoading.value,
+                    skeleton: Column(
+                        children: GenerateWidgets.getWidgets(
+                            3, () => const SkeletonStocksByTrend())),
+                    child: Container(
+                      color: const Color.fromRGBO(48, 48, 48, 1),
+                      padding: const EdgeInsets.only(bottom: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          StocksByTrend(
+                            title: 'Tendência de alta',
+                            stocks: dataController.stocks,
                           ),
-                        ),
-                      ]),
-                    );
+                          StocksByTrend(
+                            title: 'Neutro',
+                            stocks: dataController.stocks,
+                          ),
+                          StocksByTrend(
+                            title: 'Tendência de baixa',
+                            stocks: dataController.stocks,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ]),
+              );
             }),
           ],
         ),

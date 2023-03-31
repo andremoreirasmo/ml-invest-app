@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ml_invest_app/shared/models/stock_model.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
-import 'package:ml_invest_app/shared/widgets/ticker_stock.dart';
+import 'package:ml_invest_app/shared/widgets/ticker_stock/ticker_stock.dart';
 
 class StocksByTrend extends StatelessWidget {
   const StocksByTrend({super.key, required this.title, required this.stocks});

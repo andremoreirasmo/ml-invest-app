@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
 import 'package:ml_invest_app/shared/widgets/default_app_bar.dart';
 
-import '../shared/widgets/ticker_stock.dart';
+import '../shared/widgets/ticker_stock/ticker_stock.dart';
 
 class SelectCompareStockPage extends StatefulWidget {
   const SelectCompareStockPage({super.key});
