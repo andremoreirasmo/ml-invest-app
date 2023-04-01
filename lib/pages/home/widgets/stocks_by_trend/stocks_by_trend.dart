@@ -70,7 +70,9 @@ class StocksByTrend extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        NumberUtil.formatedCurrency(stock.value),
+                        NumberUtil.formatedCurrency(stock
+                            .summary!.price!.regularMarketPrice!
+                            .toDouble()),
                         style: const TextStyle(color: Colors.white),
                       ),
                       const SizedBox(
