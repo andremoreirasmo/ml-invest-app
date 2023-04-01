@@ -24,7 +24,7 @@ class StockService {
       return list;
     } catch (error) {
       ErrorHandler.handleError(error);
-      return null;
+      return [];
     }
   }
 }
