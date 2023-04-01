@@ -1,1 +1,1 @@
-enum HomePageEnum { home, list, account, about }
+enum HomePageEnum { home, history, account, about }
