@@ -7,22 +7,17 @@ import 'package:ml_invest_app/shared/models/trend_stock_enum.dart';
 import 'package:ml_invest_app/shared/utils/widget_util.dart';
 import 'package:skeletons/skeletons.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  HomeController dataController = Get.put(HomeController());
+  final HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
         edgeOffset: 260,
-        onRefresh: () => dataController.fethData(),
+        onRefresh: () => homeController.fethData(),
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -54,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 delegate: SliverChildListDelegate.fixed([
                   Skeleton(
                     themeMode: ThemeMode.dark,
-                    isLoading: dataController.isDataLoading.value,
+                    isLoading: homeController.isDataLoading.value,
                     skeleton: Column(
                         children: WidgetUtil.getWidgets(
                             3, () => const SkeletonStocksByTrend())),
@@ -66,15 +61,15 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           StocksByTrend(
                             type: TrendStockEnum.upward,
-                            stocks: dataController.stocks,
+                            stocks: homeController.stocks,
                           ),
                           StocksByTrend(
                             type: TrendStockEnum.stable,
-                            stocks: dataController.stocks,
+                            stocks: homeController.stocks,
                           ),
                           StocksByTrend(
                             type: TrendStockEnum.downward,
-                            stocks: dataController.stocks,
+                            stocks: homeController.stocks,
                           ),
                         ],
                       ),

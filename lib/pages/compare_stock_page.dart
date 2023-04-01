@@ -2,42 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ml_invest_app/shared/models/home_page_enum.dart';
+import 'package:ml_invest_app/shared/models/stock_model.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
 import 'package:ml_invest_app/shared/widgets/default_app_bar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class CompareStockPage extends StatefulWidget {
-  const CompareStockPage({super.key});
+class CompareStockPage extends StatelessWidget {
+  CompareStockPage({super.key});
 
-  @override
-  State<CompareStockPage> createState() => _CompareStockPageState();
-}
+  late List<SalesData> _chartData = getChartData();
 
-class _CompareStockPageState extends State<CompareStockPage> {
-  late List<SalesData> _chartData;
-  late TooltipBehavior _tooltipBehavior;
+  late TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
 
-  @override
-  void initState() {
-    _chartData = getChartData();
-    _tooltipBehavior = TooltipBehavior(enable: true);
-    super.initState();
-  }
+  List<StockModel> selectedStocks = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
+    var tickersStocks = selectedStocks.map((e) => e.ticker).join(', ');
+
     return Scaffold(
       appBar: DefaultAppBar(
         title: Row(children: [
-          Text(
-            "Comparando ações <NOMES>",
-            style: TextStyle(fontSize: 14),
+          Expanded(
+            child: Text(
+              "Comparando ações $tickersStocks",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 14),
+            ),
           ),
         ]),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () =>
-              Get.offAllNamed(Routes.home, arguments: HomePageEnum.list.index),
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Get.offAllNamed(Routes.home,
+              arguments: HomePageEnum.history.index),
         ),
       ),
       body: ListView(
