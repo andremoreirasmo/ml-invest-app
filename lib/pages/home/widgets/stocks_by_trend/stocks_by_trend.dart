@@ -4,7 +4,6 @@ import 'package:ml_invest_app/shared/models/stock_model.dart';
 import 'package:ml_invest_app/shared/models/trend_stock_enum.dart';
 import 'package:ml_invest_app/shared/utils/number_util.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
-import 'package:ml_invest_app/shared/utils/widget_util.dart';
 import 'package:ml_invest_app/shared/widgets/ticker_stock/ticker_stock.dart';
 
 class StocksByTrend extends StatelessWidget {
@@ -14,26 +13,24 @@ class StocksByTrend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetUtil.showIfTrue(
-        stocks != null && stocks!.isNotEmpty,
-        Container(
-          padding: const EdgeInsets.only(top: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 10, left: 10),
-                child: Text(
-                  type.description,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-              Column(
-                children: stocks!.map((e) => _getStock(e)).toList(),
-              ),
-            ],
+    return Container(
+      padding: const EdgeInsets.only(top: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(bottom: 10, left: 10),
+            child: Text(
+              type.description,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
-        ));
+          Column(
+            children: stocks!.map((e) => _getStock(e)).toList(),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _getStock(StockModel stock) {
@@ -42,7 +39,7 @@ class StocksByTrend extends StatelessWidget {
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          onTap: () => Get.toNamed(Routes.detailStock),
+          onTap: () => Get.toNamed(Routes.detailStock, arguments: stock),
           child: Container(
             padding: const EdgeInsets.only(
               left: 10,
@@ -70,7 +67,7 @@ class StocksByTrend extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        NumberUtil.formatedCurrency(stock
+                        NumberUtil.formatCurrency(stock
                             .summary!.price!.regularMarketPrice!
                             .toDouble()),
                         style: const TextStyle(color: Colors.white),

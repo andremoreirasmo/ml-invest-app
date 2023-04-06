@@ -6,6 +6,7 @@ import 'models/app_exceptions.dart';
 
 class ErrorHandler {
   static void handleError(error) {
+    print(error.toString());
     if (error is BadRequestException) {
       var message = error.details;
       Get.snackbar('Atenção', message ?? 'Valide os campos informados.');

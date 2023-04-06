@@ -8,6 +8,7 @@ import 'package:ml_invest_app/shared/errors/models/app_exceptions.dart';
 class HttpClient {
   Future<dynamic> get(String url) async {
     try {
+      await Future<void>.delayed(const Duration(milliseconds: 1000));
       http.Response response = await http.get(Uri.tryParse(url)!);
 
       return _processResponse(response);

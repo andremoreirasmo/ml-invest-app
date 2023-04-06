@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ml_invest_app/pages/compare_stock_page.dart';
-import 'package:ml_invest_app/pages/detail_stock_page.dart';
+import 'package:ml_invest_app/pages/detail_stock_page/detail_stock_page.dart';
 import 'package:ml_invest_app/pages/home/home_controller.dart';
 import 'package:ml_invest_app/pages/home/home_page.dart';
 import 'package:ml_invest_app/pages/list_page.dart';

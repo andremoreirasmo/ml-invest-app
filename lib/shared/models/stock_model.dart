@@ -1,5 +1,5 @@
 class StockModel {
-  int? id;
+  num? id;
   String? name;
   String? image;
   String? ticker;
@@ -109,8 +109,8 @@ class Dividends {
 class Quotes {
   String? date;
   num? high;
-  int? volume;
-  int? open;
+  num? volume;
+  num? open;
   num? low;
   num? close;
   num? adjclose;
@@ -154,12 +154,12 @@ class Meta {
   String? instrumentType;
   String? firstTradeDate;
   String? regularMarketTime;
-  int? gmtoffset;
+  num? gmtoffset;
   String? timezone;
   String? exchangeTimezoneName;
   num? regularMarketPrice;
   num? chartPreviousClose;
-  int? priceHint;
+  num? priceHnum;
   CurrentTradingPeriod? currentTradingPeriod;
   String? dataGranularity;
   String? range;
@@ -177,7 +177,7 @@ class Meta {
       this.exchangeTimezoneName,
       this.regularMarketPrice,
       this.chartPreviousClose,
-      this.priceHint,
+      this.priceHnum,
       this.currentTradingPeriod,
       this.dataGranularity,
       this.range,
@@ -195,7 +195,7 @@ class Meta {
     exchangeTimezoneName = json["exchangeTimezoneName"];
     regularMarketPrice = json["regularMarketPrice"];
     chartPreviousClose = json["chartPreviousClose"];
-    priceHint = json["priceHint"];
+    priceHnum = json["priceHnum"];
     currentTradingPeriod = json["currentTradingPeriod"] == null
         ? null
         : CurrentTradingPeriod.fromJson(json["currentTradingPeriod"]);
@@ -219,7 +219,7 @@ class Meta {
     _data["exchangeTimezoneName"] = exchangeTimezoneName;
     _data["regularMarketPrice"] = regularMarketPrice;
     _data["chartPreviousClose"] = chartPreviousClose;
-    _data["priceHint"] = priceHint;
+    _data["priceHnum"] = priceHnum;
     if (currentTradingPeriod != null) {
       _data["currentTradingPeriod"] = currentTradingPeriod?.toJson();
     }
@@ -265,7 +265,7 @@ class Post {
   String? timezone;
   String? end;
   String? start;
-  int? gmtoffset;
+  num? gmtoffset;
 
   Post({this.timezone, this.end, this.start, this.gmtoffset});
 
@@ -290,7 +290,7 @@ class Regular {
   String? timezone;
   String? end;
   String? start;
-  int? gmtoffset;
+  num? gmtoffset;
 
   Regular({this.timezone, this.end, this.start, this.gmtoffset});
 
@@ -315,7 +315,7 @@ class Pre {
   String? timezone;
   String? end;
   String? start;
-  int? gmtoffset;
+  num? gmtoffset;
 
   Pre({this.timezone, this.end, this.start, this.gmtoffset});
 
@@ -377,29 +377,29 @@ class Summary {
 }
 
 class FinancialData {
-  int? maxAge;
+  num? maxAge;
   num? currentPrice;
-  int? targetHighPrice;
+  num? targetHighPrice;
   num? targetLowPrice;
   num? targetMeanPrice;
   num? targetMedianPrice;
   num? recommendationMean;
   String? recommendationKey;
-  int? numberOfAnalystOpinions;
-  int? totalCash;
+  num? numberOfAnalystOpinions;
+  num? totalCash;
   num? totalCashPerShare;
-  int? ebitda;
-  int? totalDebt;
+  num? ebitda;
+  num? totalDebt;
   num? quickRatio;
   num? currentRatio;
-  int? totalRevenue;
+  num? totalRevenue;
   num? debtToEquity;
   num? revenuePerShare;
   num? returnOnAssets;
   num? returnOnEquity;
-  int? grossProfits;
-  int? freeCashflow;
-  int? operatingCashflow;
+  num? grossProfits;
+  num? freeCashflow;
+  num? operatingCashflow;
   num? earningsGrowth;
   num? revenueGrowth;
   num? grossMargins;
@@ -510,7 +510,7 @@ class FinancialData {
 }
 
 class Price {
-  int? maxAge;
+  num? maxAge;
   num? preMarketChangePercent;
   num? preMarketChange;
   String? preMarketTime;
@@ -524,19 +524,19 @@ class Price {
   num? regularMarketChangePercent;
   num? regularMarketChange;
   String? regularMarketTime;
-  int? priceHint;
+  num? priceHnum;
   num? regularMarketPrice;
   num? regularMarketDayHigh;
   num? regularMarketDayLow;
-  int? regularMarketVolume;
-  int? averageDailyVolume10Day;
-  int? averageDailyVolume3Month;
+  num? regularMarketVolume;
+  num? averageDailyVolume10Day;
+  num? averageDailyVolume3Month;
   num? regularMarketPreviousClose;
   String? regularMarketSource;
   num? regularMarketOpen;
   String? exchange;
   String? exchangeName;
-  int? exchangeDataDelayedBy;
+  num? exchangeDataDelayedBy;
   String? marketState;
   String? quoteType;
   String? symbol;
@@ -549,7 +549,7 @@ class Price {
   dynamic fromCurrency;
   dynamic toCurrency;
   dynamic lastMarket;
-  int? marketCap;
+  num? marketCap;
 
   Price(
       {this.maxAge,
@@ -566,7 +566,7 @@ class Price {
       this.regularMarketChangePercent,
       this.regularMarketChange,
       this.regularMarketTime,
-      this.priceHint,
+      this.priceHnum,
       this.regularMarketPrice,
       this.regularMarketDayHigh,
       this.regularMarketDayLow,
@@ -608,7 +608,7 @@ class Price {
     regularMarketChangePercent = json["regularMarketChangePercent"];
     regularMarketChange = json["regularMarketChange"];
     regularMarketTime = json["regularMarketTime"];
-    priceHint = json["priceHint"];
+    priceHnum = json["priceHnum"];
     regularMarketPrice = json["regularMarketPrice"];
     regularMarketDayHigh = json["regularMarketDayHigh"];
     regularMarketDayLow = json["regularMarketDayLow"];
@@ -652,7 +652,7 @@ class Price {
     _data["regularMarketChangePercent"] = regularMarketChangePercent;
     _data["regularMarketChange"] = regularMarketChange;
     _data["regularMarketTime"] = regularMarketTime;
-    _data["priceHint"] = priceHint;
+    _data["priceHnum"] = priceHnum;
     _data["regularMarketPrice"] = regularMarketPrice;
     _data["regularMarketDayHigh"] = regularMarketDayHigh;
     _data["regularMarketDayLow"] = regularMarketDayLow;
@@ -683,8 +683,8 @@ class Price {
 }
 
 class SummaryDetail {
-  int? maxAge;
-  int? priceHint;
+  num? maxAge;
+  num? priceHnum;
   num? previousClose;
   num? open;
   num? dayLow;
@@ -700,16 +700,16 @@ class SummaryDetail {
   num? beta;
   num? trailingPe;
   num? forwardPe;
-  int? volume;
-  int? regularMarketVolume;
-  int? averageVolume;
-  int? averageVolume10Days;
-  int? averageDailyVolume10Day;
+  num? volume;
+  num? regularMarketVolume;
+  num? averageVolume;
+  num? averageVolume10Days;
+  num? averageDailyVolume10Day;
   num? bid;
   num? ask;
-  int? bidSize;
-  int? askSize;
-  int? marketCap;
+  num? bidSize;
+  num? askSize;
+  num? marketCap;
   num? fiftyTwoWeekLow;
   num? fiftyTwoWeekHigh;
   num? priceToSalesTrailing12Months;
@@ -727,7 +727,7 @@ class SummaryDetail {
 
   SummaryDetail(
       {this.maxAge,
-      this.priceHint,
+      this.priceHnum,
       this.previousClose,
       this.open,
       this.dayLow,
@@ -770,7 +770,7 @@ class SummaryDetail {
 
   SummaryDetail.fromJson(Map<String, dynamic> json) {
     maxAge = json["maxAge"];
-    priceHint = json["priceHint"];
+    priceHnum = json["priceHnum"];
     previousClose = json["previousClose"];
     open = json["open"];
     dayLow = json["dayLow"];
@@ -815,7 +815,7 @@ class SummaryDetail {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["maxAge"] = maxAge;
-    _data["priceHint"] = priceHint;
+    _data["priceHnum"] = priceHnum;
     _data["previousClose"] = previousClose;
     _data["open"] = open;
     _data["dayLow"] = dayLow;
@@ -871,15 +871,15 @@ class AssetProfile {
   String? industry;
   String? sector;
   String? longBusinessSummary;
-  int? fullTimeEmployees;
+  num? fullTimeEmployees;
   List<CompanyOfficers>? companyOfficers;
-  int? auditRisk;
-  int? boardRisk;
-  int? compensationRisk;
-  int? shareHolderRightsRisk;
-  int? overallRisk;
+  num? auditRisk;
+  num? boardRisk;
+  num? compensationRisk;
+  num? shareHolderRightsRisk;
+  num? overallRisk;
   String? governanceEpochDate;
-  int? maxAge;
+  num? maxAge;
 
   AssetProfile(
       {this.address1,
@@ -960,13 +960,13 @@ class AssetProfile {
 }
 
 class CompanyOfficers {
-  int? maxAge;
+  num? maxAge;
   String? name;
-  int? age;
+  num? age;
   String? title;
-  int? yearBorn;
-  int? exercisedValue;
-  int? unexercisedValue;
+  num? yearBorn;
+  num? exercisedValue;
+  num? unexercisedValue;
 
   CompanyOfficers(
       {this.maxAge,

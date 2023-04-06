@@ -10,13 +10,10 @@ class StockService {
     _http = HttpClient();
   }
 
-  static String baseUri = '/stock';
+  static String url = "${ApiUrl.url}/stock";
 
-  Future<List<StockModel>?> getAllStocks() async {
-    var url = "${ApiUrl.url}$baseUri";
-
+  Future<List<StockModel>> getAllStocks() async {
     try {
-      await Future<void>.delayed(const Duration(milliseconds: 1000));
       List<dynamic> response = await _http.get(url);
 
       var list = response.map((e) => StockModel.fromJson(e)).toList();
@@ -25,6 +22,18 @@ class StockService {
     } catch (error) {
       ErrorHandler.handleError(error);
       return [];
+    }
+  }
+
+  Future<StockModel?> findOne(int id) async {
+    try {
+      String uri = "$url/$id";
+      dynamic response = await _http.get(uri);
+
+      return StockModel.fromJson(response);
+    } catch (error) {
+      ErrorHandler.handleError(error);
+      return null;
     }
   }
 }

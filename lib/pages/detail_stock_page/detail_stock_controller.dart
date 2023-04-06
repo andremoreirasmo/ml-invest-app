@@ -2,16 +2,14 @@ import 'package:get/get.dart';
 import 'package:ml_invest_app/shared/models/stock_model.dart';
 import 'package:ml_invest_app/shared/services/stock_service.dart';
 
-class HomeController extends GetxController {
+class DetailStockController extends GetxController {
   final StockService _stockService = StockService();
-  List<StockModel> stocks = [];
-
-  var isDataLoading = false.obs;
+  Rx<StockModel> stock = Rx<StockModel>(StockModel());
+  var isDataLoading = true.obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    fethData();
   }
 
   @override
@@ -19,16 +17,18 @@ class HomeController extends GetxController {
     super.onReady();
   }
 
-  @override
-  void onClose() {}
-
-  fethData() async {
+  find(StockModel stockToFind) async {
     try {
       isDataLoading(true);
 
-      stocks = await _stockService.getAllStocks();
+      stock.value = stockToFind;
+      stock.value =
+          await _stockService.findOne(stockToFind.id as int) as StockModel;
     } finally {
       isDataLoading(false);
     }
   }
+
+  @override
+  void onClose() {}
 }
