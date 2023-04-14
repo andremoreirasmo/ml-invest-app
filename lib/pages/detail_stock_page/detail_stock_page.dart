@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:ml_invest_app/pages/detail_stock_page/detail_stock_controller.dart';
 import 'package:ml_invest_app/shared/models/stock_model.dart';
 import 'package:ml_invest_app/shared/utils/number_util.dart';
+import 'package:ml_invest_app/shared/widgets/chart_stock/chart_stock.dart';
 import 'package:ml_invest_app/shared/widgets/default_app_bar.dart';
 import 'package:skeletons/skeletons.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../shared/widgets/ticker_stock/ticker_stock.dart';
 
@@ -15,10 +15,6 @@ class DetailStockPage extends StatelessWidget {
   DetailStockPage({super.key}) {
     controller.find(Get.arguments);
   }
-
-  late List<SalesData> _chartData = [];
-
-  late TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
 
   @override
   Widget build(BuildContext context) {
@@ -76,32 +72,7 @@ class DetailStockPage extends StatelessWidget {
                     ))
                   ]),
                 ),
-                /* Column(
-                  children: [
-                    SfCartesianChart(
-                      title: ChartTitle(text: 'Yearly sales analysis'),
-                      legend: Legend(isVisible: true),
-                      tooltipBehavior: _tooltipBehavior,
-                      series: <ChartSeries>[
-                        LineSeries<Quotes, double>(
-                            name: 'Sales',
-                            dataSource: controller.stock.value.chart.quotes,
-                            xValueMapper: (Quotes quote, _) => quote.date,
-                            yValueMapper: (Quotes quote, _) => sales.sales,
-                            dataLabelSettings:
-                                DataLabelSettings(isVisible: true),
-                            enableTooltip: true)
-                      ],
-                      primaryXAxis: NumericAxis(
-                        edgeLabelPlacement: EdgeLabelPlacement.shift,
-                      ),
-                      primaryYAxis: NumericAxis(
-                          labelFormat: '{value}M',
-                          numberFormat:
-                              NumberFormat.simpleCurrency(decimalDigits: 0)),
-                    ),
-                  ],
-                ), */
+                ChartStock(chartData: controller.stock.value.chart?.quotes),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [

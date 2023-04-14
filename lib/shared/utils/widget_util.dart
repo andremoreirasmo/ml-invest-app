@@ -11,7 +11,7 @@ class WidgetUtil {
     return widgets;
   }
 
-  static Widget showIf(bool value, Widget widget) {
-    return (value) ? widget : const SizedBox.shrink();
+  static Widget showIf(bool value, Function() getWidget) {
+    return (value) ? getWidget() : const SizedBox.shrink();
   }
 }

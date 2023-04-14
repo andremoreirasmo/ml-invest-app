@@ -73,16 +73,17 @@ class SelectCompareStockPage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Obx(() => WidgetUtil.showIf(
           controller.selectedStocks.length > 1,
-          FloatingActionButton(
-            onPressed: () {
-              Get.offAndToNamed(Routes.compareStock,
-                  arguments: controller.selectedStocks.toList());
-            },
-            tooltip: 'Comparar',
-            elevation: 2.0,
-            backgroundColor: const Color.fromRGBO(84, 84, 84, 1),
-            child: const Icon(Icons.send, color: Color.fromRGBO(44, 157, 4, 1)),
-          ))),
+          () => FloatingActionButton(
+                onPressed: () {
+                  Get.offAndToNamed(Routes.compareStock,
+                      arguments: controller.selectedStocks.toList());
+                },
+                tooltip: 'Comparar',
+                elevation: 2.0,
+                backgroundColor: const Color.fromRGBO(84, 84, 84, 1),
+                child: const Icon(Icons.send,
+                    color: Color.fromRGBO(44, 157, 4, 1)),
+              ))),
     );
   }
 }

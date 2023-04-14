@@ -107,7 +107,7 @@ class Dividends {
 }
 
 class Quotes {
-  String? date;
+  DateTime? date;
   num? high;
   num? volume;
   num? open;
@@ -125,7 +125,7 @@ class Quotes {
       this.adjclose});
 
   Quotes.fromJson(Map<String, dynamic> json) {
-    date = json["date"];
+    date = DateTime.parse(json["date"]);
     high = json["high"];
     volume = json["volume"];
     open = json["open"];
