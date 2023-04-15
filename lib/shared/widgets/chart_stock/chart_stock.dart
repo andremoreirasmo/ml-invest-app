@@ -28,7 +28,8 @@ class ChartStock extends StatelessWidget {
                       backgroundColor: const Color.fromARGB(132, 15, 15, 15),
                       primaryXAxis: DateTimeAxis(
                           edgeLabelPlacement: EdgeLabelPlacement.shift,
-                          majorGridLines: const MajorGridLines(width: 0)),
+                          majorGridLines: const MajorGridLines(width: 0),
+                          intervalType: DateTimeIntervalType.minutes),
                       primaryYAxis: NumericAxis(
                         axisLine: const AxisLine(width: 0),
                         majorTickLines:
@@ -44,7 +45,7 @@ class ChartStock extends StatelessWidget {
                           highValueMapper: (Quotes data, _) => data.high,
                           openValueMapper: (Quotes data, _) => data.open,
                           closeValueMapper: (Quotes data, _) => data.close,
-                        )
+                        ),
                       ]),
                   Container(
                     color: const Color.fromARGB(132, 15, 15, 15),
@@ -54,10 +55,9 @@ class ChartStock extends StatelessWidget {
                         getOptionData('1D', true),
                         getOptionData('1S', false),
                         getOptionData('1M', false),
-                        getOptionData('3M', false),
-                        getOptionData('6M', false),
                         getOptionData('1A', false),
                         getOptionData('5A', false),
+                        getOptionData('Max', false),
                       ],
                     ),
                   )
