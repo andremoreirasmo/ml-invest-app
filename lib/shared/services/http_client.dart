@@ -6,10 +6,15 @@ import 'package:http/http.dart' as http;
 import 'package:ml_invest_app/shared/errors/models/app_exceptions.dart';
 
 class HttpClient {
-  Future<dynamic> get(String url) async {
+  Future<dynamic> get(String url, {Map<String, String>? queryParams}) async {
     try {
       await Future<void>.delayed(const Duration(milliseconds: 1000));
-      http.Response response = await http.get(Uri.tryParse(url)!);
+
+      Uri parsedUri = Uri.parse(url);
+      if (queryParams != null) {
+        parsedUri = parsedUri.replace(queryParameters: queryParams);
+      }
+      http.Response response = await http.get(parsedUri);
 
       return _processResponse(response);
     } on SocketException {

@@ -72,7 +72,10 @@ class DetailStockPage extends StatelessWidget {
                     ))
                   ]),
                 ),
-                ChartStock(chartData: controller.stock.value.chart?.quotes),
+                ChartStock(
+                    chartData: controller.stock.value.chart?.quotes,
+                    selectedPeriod: controller.selectedPeriod,
+                    isLoading: controller.isChartLoading),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
