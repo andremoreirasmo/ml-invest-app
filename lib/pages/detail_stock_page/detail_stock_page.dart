@@ -9,11 +9,28 @@ import 'package:skeletons/skeletons.dart';
 
 import '../../shared/widgets/ticker_stock/ticker_stock.dart';
 
-class DetailStockPage extends StatelessWidget {
+class DetailStockPage extends StatefulWidget {
+  @override
+  State<DetailStockPage> createState() => _DetailStockPageState();
+}
+
+class _DetailStockPageState extends State<DetailStockPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   DetailStockController controller = Get.put(DetailStockController());
 
-  DetailStockPage({super.key}) {
+  @override
+  void initState() {
     controller.find(Get.arguments);
+    _tabController = TabController(length: 2, vsync: this);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,67 +53,91 @@ class DetailStockPage extends StatelessWidget {
           ]),
         ),
         body: RefreshIndicator(
-          onRefresh: () => controller.find(Get.arguments),
-          child: Skeleton(
-            isLoading: controller.isDataLoading.value,
-            skeleton: Center(child: CircularProgressIndicator()),
-            child: ListView(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  color: const Color.fromRGBO(97, 97, 97, 1),
-                  height: 85,
-                  child: Row(children: [
-                    CircleAvatar(
-                      radius: 25,
-                      backgroundImage:
-                          NetworkImage(controller.stock.value.image as String),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: Text(
-                      NumberUtil.formatCurrency(price?.regularMarketPrice),
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    )),
-                    Expanded(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+            onRefresh: () => controller.find(Get.arguments),
+            child: Skeleton(
+              isLoading: controller.isDataLoading.value,
+              skeleton: Center(child: CircularProgressIndicator()),
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Column(
                       children: [
-                        Text(
-                          "$regularMarketChange ($regularMarketChangePercent%)",
-                          style: TextStyle(color: Colors.red, fontSize: 20),
+                        Container(
+                          padding: const EdgeInsets.all(15),
+                          color: const Color.fromRGBO(97, 97, 97, 1),
+                          height: 85,
+                          child: Row(children: [
+                            CircleAvatar(
+                              radius: 25,
+                              backgroundImage: NetworkImage(
+                                  controller.stock.value.image as String),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                                child: Text(
+                              NumberUtil.formatCurrency(
+                                  price?.regularMarketPrice),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            )),
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "$regularMarketChange ($regularMarketChangePercent%)",
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 20),
+                                ),
+                              ],
+                            ))
+                          ]),
+                        ),
+                        ChartStock(
+                            chartData: controller.stock.value.chart?.quotes,
+                            selectedPeriod: controller.selectedPeriod,
+                            isLoading: controller.isChartLoading),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Image(
+                              image: AssetImage('assets/images/high.png'),
+                              height: 42,
+                              fit: BoxFit.cover,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Tendência de alta",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            )
+                          ],
                         ),
                       ],
-                    ))
-                  ]),
-                ),
-                ChartStock(
-                    chartData: controller.stock.value.chart?.quotes,
-                    selectedPeriod: controller.selectedPeriod,
-                    isLoading: controller.isChartLoading),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Image(
-                      image: AssetImage('assets/images/high.png'),
-                      height: 42,
-                      fit: BoxFit.cover,
                     ),
-                    SizedBox(
-                      width: 10,
+                  ),
+                  SliverToBoxAdapter(
+                    child: TabBar(controller: _tabController, tabs: [
+                      Tab(child: Text("Tab 1")),
+                      Tab(child: Text("Tab 2")),
+                    ]),
+                  ),
+                  SliverFillRemaining(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        Container(height: 5000, color: Colors.amberAccent),
+                        Container(height: 5000),
+                      ],
                     ),
-                    Text(
-                      "Tendência de alta",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
+                  )
+                ],
+              ),
+            )),
       );
     });
   }
