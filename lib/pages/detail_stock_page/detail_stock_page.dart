@@ -122,7 +122,7 @@ class _DetailStockPageState extends State<DetailStockPage>
                   ),
                   SliverToBoxAdapter(
                     child: TabBar(controller: _tabController, tabs: [
-                      Tab(child: Text("Tab 1")),
+                      Tab(child: Text("Geral")),
                       Tab(child: Text("Tab 2")),
                     ]),
                   ),
@@ -130,8 +130,45 @@ class _DetailStockPageState extends State<DetailStockPage>
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        Container(height: 5000, color: Colors.amberAccent),
-                        Container(height: 5000),
+                        Column(children: [
+                          Container(
+                            padding: EdgeInsets.all(15),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 200,
+                                  child: const Text(
+                                    "Fechamento anterior",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 15),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    NumberUtil.formatValue(controller
+                                        .stock
+                                        .value
+                                        .summary
+                                        ?.summaryDetail
+                                        ?.previousClose),
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 15),
+                                  ),
+                                ),
+                                const Divider(
+                                  height: 20,
+                                  thickness: 5,
+                                  indent: 20,
+                                  endIndent: 0,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ),
+                          )
+                        ]),
+                        Container(height: 50, color: Colors.red),
                       ],
                     ),
                   )
@@ -141,21 +178,4 @@ class _DetailStockPageState extends State<DetailStockPage>
       );
     });
   }
-
-  List<SalesData> getChartData() {
-    final List<SalesData> chartData = [
-      SalesData(2017, 25),
-      SalesData(2018, 12),
-      SalesData(2019, 24),
-      SalesData(2020, 18),
-      SalesData(2021, 30)
-    ];
-    return chartData;
-  }
-}
-
-class SalesData {
-  SalesData(this.year, this.sales);
-  final double year;
-  final double sales;
 }
