@@ -8,8 +8,6 @@ import 'package:ml_invest_app/shared/errors/models/app_exceptions.dart';
 class HttpClient {
   Future<dynamic> get(String url, {Map<String, String>? queryParams}) async {
     try {
-      await Future<void>.delayed(const Duration(milliseconds: 1000));
-
       Uri parsedUri = Uri.parse(url);
       if (queryParams != null) {
         parsedUri = parsedUri.replace(queryParameters: queryParams);
