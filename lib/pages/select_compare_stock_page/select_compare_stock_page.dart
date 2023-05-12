@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ml_invest_app/pages/home/home_controller.dart';
 import 'package:ml_invest_app/pages/select_compare_stock_page/select_compare_stock_controller.dart';
@@ -42,10 +43,15 @@ class SelectCompareStockPage extends StatelessWidget {
                       title: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundImage:
-                                NetworkImage(stock.image as String),
+                          ClipOval(
+                            child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: SvgPicture.network(
+                                stock.image!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                           TickerStock(title: stock.ticker as String),
                           Expanded(
@@ -61,6 +67,10 @@ class SelectCompareStockPage extends StatelessWidget {
                       value: controller.selectedStocks.contains(stock),
                       onChanged: (value) {
                         if (value != null && value) {
+                          if (controller.selectedStocks.length == 2) {
+                            return;
+                          }
+
                           controller.selectedStocks.add(stock);
                         } else {
                           controller.selectedStocks.remove(stock);
