@@ -6,11 +6,11 @@ import 'package:skeletons/skeletons.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartStock extends StatelessWidget {
-  List<Quotes>? chartData;
-  Rx<ChartPeriodEnum> selectedPeriod;
-  Rx<bool> isLoading;
+  final List<StockChartModel>? chartData;
+  final Rx<ChartPeriodEnum> selectedPeriod;
+  final Rx<bool> isLoading;
 
-  ChartStock(
+  const ChartStock(
       {super.key,
       required this.chartData,
       required this.selectedPeriod,
@@ -20,6 +20,7 @@ class ChartStock extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 352,
+      width: double.maxFinite,
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
       decoration: BoxDecoration(
@@ -48,15 +49,16 @@ class ChartStock extends StatelessWidget {
                     ),
                     tooltipBehavior: TooltipBehavior(enable: true),
                     series: <ChartSeries>[
-                      CandleSeries<Quotes, DateTime>(
+                      CandleSeries<StockChartModel, DateTime>(
                         enableSolidCandles: true,
                         name: 'Dados',
                         dataSource: chartData!,
-                        xValueMapper: (Quotes data, _) => data.date,
-                        lowValueMapper: (Quotes data, _) => data.low,
-                        highValueMapper: (Quotes data, _) => data.high,
-                        openValueMapper: (Quotes data, _) => data.open,
-                        closeValueMapper: (Quotes data, _) => data.close,
+                        xValueMapper: (StockChartModel data, _) => data.date,
+                        lowValueMapper: (StockChartModel data, _) => data.low,
+                        highValueMapper: (StockChartModel data, _) => data.high,
+                        openValueMapper: (StockChartModel data, _) => data.open,
+                        closeValueMapper: (StockChartModel data, _) =>
+                            data.close,
                       ),
                     ]),
                 Container(

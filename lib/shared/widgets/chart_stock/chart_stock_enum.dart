@@ -1,9 +1,8 @@
-import 'package:ml_invest_app/shared/extesions/string_extension.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 enum ChartPeriodEnum {
   oneDay,
-  oneWeek,
+  fiveDays,
   oneMonth,
   oneYear,
   fiveYears,
@@ -15,8 +14,8 @@ extension ChartPeriodEnumExtension on ChartPeriodEnum {
     switch (this) {
       case ChartPeriodEnum.oneDay:
         return '1D';
-      case ChartPeriodEnum.oneWeek:
-        return '1S';
+      case ChartPeriodEnum.fiveDays:
+        return '5D';
       case ChartPeriodEnum.oneMonth:
         return '1M';
       case ChartPeriodEnum.oneYear:
@@ -31,14 +30,14 @@ extension ChartPeriodEnumExtension on ChartPeriodEnum {
   }
 
   String get queryParam {
-    return toString().split('.').last.onlyCapitalizeFirst();
+    return toString().split('.').last;
   }
 
   DateTimeIntervalType get chartIntervalType {
     switch (this) {
       case ChartPeriodEnum.oneDay:
         return DateTimeIntervalType.minutes;
-      case ChartPeriodEnum.oneWeek:
+      case ChartPeriodEnum.fiveDays:
       case ChartPeriodEnum.oneMonth:
         return DateTimeIntervalType.days;
       case ChartPeriodEnum.oneYear:

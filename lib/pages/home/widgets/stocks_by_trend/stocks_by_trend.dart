@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ml_invest_app/shared/models/stock_model.dart';
 import 'package:ml_invest_app/shared/models/trend_stock_enum.dart';
@@ -48,11 +49,17 @@ class StocksByTrend extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: NetworkImage(stock.image as String),
+                ClipOval(
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: SvgPicture.network(
+                      stock.image!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-                TickerStock(title: stock.ticker as String),
+                TickerStock(title: stock.ticker!),
                 Expanded(
                     flex: 2,
                     child: Text(
@@ -75,7 +82,8 @@ class StocksByTrend extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      Image(image: AssetImage(type.image))
+                      Icon(stock.trend!.icon,
+                          color: stock.trend!.color, size: 20),
                     ],
                   ),
                 )

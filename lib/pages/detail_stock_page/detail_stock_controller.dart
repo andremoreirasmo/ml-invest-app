@@ -8,6 +8,7 @@ class DetailStockController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final StockService _stockService = StockService();
   late TabController tabController;
+  var selectedTab = 0.obs;
 
   Rx<StockModel> stock = Rx<StockModel>(StockModel(name: "", ticker: ""));
   var isDataLoading = true.obs;

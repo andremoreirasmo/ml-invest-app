@@ -39,13 +39,14 @@ class StockService {
     }
   }
 
-  Future<Chart?> findChart(String ticker, ChartPeriodEnum period) async {
+  Future<List<StockChartModel>?> findChart(
+      String ticker, ChartPeriodEnum period) async {
     try {
       String uri = "$url/chart/$ticker";
-      dynamic response =
+      List<dynamic> response =
           await _http.get(uri, queryParams: {'period': period.queryParam});
 
-      return Chart.fromJson(response);
+      return response.map((e) => StockChartModel.fromJson(e)).toList();
     } catch (error) {
       ErrorHandler.handleError(error);
       return null;

@@ -1,22 +1,38 @@
+import 'package:ml_invest_app/shared/models/trend_stock_enum.dart';
+
 class StockModel {
   num? id;
   String? name;
   String? image;
   String? ticker;
+  TrendStockEnum? trend;
+  num? stockStatus;
   Summary? summary;
-  Chart? chart;
+  List<StockChartModel>? chart;
 
   StockModel(
-      {this.id, this.name, this.image, this.ticker, this.summary, this.chart});
+      {this.id,
+      this.name,
+      this.image,
+      this.ticker,
+      this.stockStatus,
+      this.summary,
+      this.chart});
 
   StockModel.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     name = json["name"];
     image = json["image"];
     ticker = json["ticker"];
+    stockStatus = json["stockStatus"];
     summary =
         json["summary"] == null ? null : Summary.fromJson(json["summary"]);
-    chart = json["chart"] == null ? null : Chart.fromJson(json["chart"]);
+    chart = json["chart"] == null
+        ? null
+        : (json["chart"] as List)
+            .map((e) => StockChartModel.fromJson(e))
+            .toList();
+    trend = trendStockFromJson(json["trendStock"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -25,313 +41,45 @@ class StockModel {
     _data["name"] = name;
     _data["image"] = image;
     _data["ticker"] = ticker;
+    _data["stockStatus"] = stockStatus;
     if (summary != null) {
       _data["summary"] = summary?.toJson();
     }
     if (chart != null) {
-      _data["chart"] = chart?.toJson();
+      _data["chart"] = chart?.map((e) => e.toJson()).toList();
     }
     return _data;
   }
 }
 
-class Chart {
-  Meta? meta;
-  List<Quotes>? quotes;
-  Events? events;
-
-  Chart({this.meta, this.quotes, this.events});
-
-  Chart.fromJson(Map<String, dynamic> json) {
-    meta = json["meta"] == null ? null : Meta.fromJson(json["meta"]);
-    quotes = json["quotes"] == null
-        ? null
-        : (json["quotes"] as List).map((e) => Quotes.fromJson(e)).toList();
-    events = json["events"] == null ? null : Events.fromJson(json["events"]);
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    if (meta != null) {
-      _data["meta"] = meta?.toJson();
-    }
-    if (quotes != null) {
-      _data["quotes"] = quotes?.map((e) => e.toJson()).toList();
-    }
-    if (events != null) {
-      _data["events"] = events?.toJson();
-    }
-    return _data;
-  }
-}
-
-class Events {
-  List<Dividends>? dividends;
-
-  Events({this.dividends});
-
-  Events.fromJson(Map<String, dynamic> json) {
-    dividends = json["dividends"] == null
-        ? null
-        : (json["dividends"] as List)
-            .map((e) => Dividends.fromJson(e))
-            .toList();
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    if (dividends != null) {
-      _data["dividends"] = dividends?.map((e) => e.toJson()).toList();
-    }
-    return _data;
-  }
-}
-
-class Dividends {
-  num? amount;
-  String? date;
-
-  Dividends({this.amount, this.date});
-
-  Dividends.fromJson(Map<String, dynamic> json) {
-    amount = json["amount"];
-    date = json["date"];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["amount"] = amount;
-    _data["date"] = date;
-    return _data;
-  }
-}
-
-class Quotes {
+class StockChartModel {
   DateTime? date;
   num? high;
+  num? close;
   num? volume;
   num? open;
   num? low;
-  num? close;
-  num? adjclose;
 
-  Quotes(
-      {this.date,
-      this.high,
-      this.volume,
-      this.open,
-      this.low,
-      this.close,
-      this.adjclose});
+  StockChartModel(
+      {this.date, this.high, this.close, this.volume, this.open, this.low});
 
-  Quotes.fromJson(Map<String, dynamic> json) {
+  StockChartModel.fromJson(Map<String, dynamic> json) {
     date = DateTime.parse(json["date"]);
     high = json["high"];
+    close = json["close"];
     volume = json["volume"];
     open = json["open"];
     low = json["low"];
-    close = json["close"];
-    adjclose = json["adjclose"];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["date"] = date;
     _data["high"] = high;
+    _data["close"] = close;
     _data["volume"] = volume;
     _data["open"] = open;
     _data["low"] = low;
-    _data["close"] = close;
-    _data["adjclose"] = adjclose;
-    return _data;
-  }
-}
-
-class Meta {
-  String? currency;
-  String? symbol;
-  String? exchangeName;
-  String? instrumentType;
-  String? firstTradeDate;
-  String? regularMarketTime;
-  num? gmtoffset;
-  String? timezone;
-  String? exchangeTimezoneName;
-  num? regularMarketPrice;
-  num? chartPreviousClose;
-  num? priceHnum;
-  CurrentTradingPeriod? currentTradingPeriod;
-  String? dataGranularity;
-  String? range;
-  List<String>? validRanges;
-
-  Meta(
-      {this.currency,
-      this.symbol,
-      this.exchangeName,
-      this.instrumentType,
-      this.firstTradeDate,
-      this.regularMarketTime,
-      this.gmtoffset,
-      this.timezone,
-      this.exchangeTimezoneName,
-      this.regularMarketPrice,
-      this.chartPreviousClose,
-      this.priceHnum,
-      this.currentTradingPeriod,
-      this.dataGranularity,
-      this.range,
-      this.validRanges});
-
-  Meta.fromJson(Map<String, dynamic> json) {
-    currency = json["currency"];
-    symbol = json["symbol"];
-    exchangeName = json["exchangeName"];
-    instrumentType = json["instrumentType"];
-    firstTradeDate = json["firstTradeDate"];
-    regularMarketTime = json["regularMarketTime"];
-    gmtoffset = json["gmtoffset"];
-    timezone = json["timezone"];
-    exchangeTimezoneName = json["exchangeTimezoneName"];
-    regularMarketPrice = json["regularMarketPrice"];
-    chartPreviousClose = json["chartPreviousClose"];
-    priceHnum = json["priceHnum"];
-    currentTradingPeriod = json["currentTradingPeriod"] == null
-        ? null
-        : CurrentTradingPeriod.fromJson(json["currentTradingPeriod"]);
-    dataGranularity = json["dataGranularity"];
-    range = json["range"];
-    validRanges = json["validRanges"] == null
-        ? null
-        : List<String>.from(json["validRanges"]);
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["currency"] = currency;
-    _data["symbol"] = symbol;
-    _data["exchangeName"] = exchangeName;
-    _data["instrumentType"] = instrumentType;
-    _data["firstTradeDate"] = firstTradeDate;
-    _data["regularMarketTime"] = regularMarketTime;
-    _data["gmtoffset"] = gmtoffset;
-    _data["timezone"] = timezone;
-    _data["exchangeTimezoneName"] = exchangeTimezoneName;
-    _data["regularMarketPrice"] = regularMarketPrice;
-    _data["chartPreviousClose"] = chartPreviousClose;
-    _data["priceHnum"] = priceHnum;
-    if (currentTradingPeriod != null) {
-      _data["currentTradingPeriod"] = currentTradingPeriod?.toJson();
-    }
-    _data["dataGranularity"] = dataGranularity;
-    _data["range"] = range;
-    if (validRanges != null) {
-      _data["validRanges"] = validRanges;
-    }
-    return _data;
-  }
-}
-
-class CurrentTradingPeriod {
-  Pre? pre;
-  Regular? regular;
-  Post? post;
-
-  CurrentTradingPeriod({this.pre, this.regular, this.post});
-
-  CurrentTradingPeriod.fromJson(Map<String, dynamic> json) {
-    pre = json["pre"] == null ? null : Pre.fromJson(json["pre"]);
-    regular =
-        json["regular"] == null ? null : Regular.fromJson(json["regular"]);
-    post = json["post"] == null ? null : Post.fromJson(json["post"]);
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    if (pre != null) {
-      _data["pre"] = pre?.toJson();
-    }
-    if (regular != null) {
-      _data["regular"] = regular?.toJson();
-    }
-    if (post != null) {
-      _data["post"] = post?.toJson();
-    }
-    return _data;
-  }
-}
-
-class Post {
-  String? timezone;
-  String? end;
-  String? start;
-  num? gmtoffset;
-
-  Post({this.timezone, this.end, this.start, this.gmtoffset});
-
-  Post.fromJson(Map<String, dynamic> json) {
-    timezone = json["timezone"];
-    end = json["end"];
-    start = json["start"];
-    gmtoffset = json["gmtoffset"];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["timezone"] = timezone;
-    _data["end"] = end;
-    _data["start"] = start;
-    _data["gmtoffset"] = gmtoffset;
-    return _data;
-  }
-}
-
-class Regular {
-  String? timezone;
-  String? end;
-  String? start;
-  num? gmtoffset;
-
-  Regular({this.timezone, this.end, this.start, this.gmtoffset});
-
-  Regular.fromJson(Map<String, dynamic> json) {
-    timezone = json["timezone"];
-    end = json["end"];
-    start = json["start"];
-    gmtoffset = json["gmtoffset"];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["timezone"] = timezone;
-    _data["end"] = end;
-    _data["start"] = start;
-    _data["gmtoffset"] = gmtoffset;
-    return _data;
-  }
-}
-
-class Pre {
-  String? timezone;
-  String? end;
-  String? start;
-  num? gmtoffset;
-
-  Pre({this.timezone, this.end, this.start, this.gmtoffset});
-
-  Pre.fromJson(Map<String, dynamic> json) {
-    timezone = json["timezone"];
-    end = json["end"];
-    start = json["start"];
-    gmtoffset = json["gmtoffset"];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["timezone"] = timezone;
-    _data["end"] = end;
-    _data["start"] = start;
-    _data["gmtoffset"] = gmtoffset;
     return _data;
   }
 }
@@ -339,11 +87,16 @@ class Pre {
 class Summary {
   AssetProfile? assetProfile;
   SummaryDetail? summaryDetail;
+  SummaryProfile? summaryProfile;
+  QuoteType? quoteType;
   Price? price;
-  FinancialData? financialData;
 
   Summary(
-      {this.assetProfile, this.summaryDetail, this.price, this.financialData});
+      {this.assetProfile,
+      this.summaryDetail,
+      this.summaryProfile,
+      this.quoteType,
+      this.price});
 
   Summary.fromJson(Map<String, dynamic> json) {
     assetProfile = json["assetProfile"] == null
@@ -352,10 +105,13 @@ class Summary {
     summaryDetail = json["summaryDetail"] == null
         ? null
         : SummaryDetail.fromJson(json["summaryDetail"]);
-    price = json["price"] == null ? null : Price.fromJson(json["price"]);
-    financialData = json["financialData"] == null
+    summaryProfile = json["summaryProfile"] == null
         ? null
-        : FinancialData.fromJson(json["financialData"]);
+        : SummaryProfile.fromJson(json["summaryProfile"]);
+    quoteType = json["quoteType"] == null
+        ? null
+        : QuoteType.fromJson(json["quoteType"]);
+    price = json["price"] == null ? null : Price.fromJson(json["price"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -366,161 +122,21 @@ class Summary {
     if (summaryDetail != null) {
       _data["summaryDetail"] = summaryDetail?.toJson();
     }
+    if (summaryProfile != null) {
+      _data["summaryProfile"] = summaryProfile?.toJson();
+    }
+    if (quoteType != null) {
+      _data["quoteType"] = quoteType?.toJson();
+    }
     if (price != null) {
       _data["price"] = price?.toJson();
     }
-    if (financialData != null) {
-      _data["financialData"] = financialData?.toJson();
-    }
-    return _data;
-  }
-}
-
-class FinancialData {
-  num? maxAge;
-  num? currentPrice;
-  num? targetHighPrice;
-  num? targetLowPrice;
-  num? targetMeanPrice;
-  num? targetMedianPrice;
-  num? recommendationMean;
-  String? recommendationKey;
-  num? numberOfAnalystOpinions;
-  num? totalCash;
-  num? totalCashPerShare;
-  num? ebitda;
-  num? totalDebt;
-  num? quickRatio;
-  num? currentRatio;
-  num? totalRevenue;
-  num? debtToEquity;
-  num? revenuePerShare;
-  num? returnOnAssets;
-  num? returnOnEquity;
-  num? grossProfits;
-  num? freeCashflow;
-  num? operatingCashflow;
-  num? earningsGrowth;
-  num? revenueGrowth;
-  num? grossMargins;
-  num? ebitdaMargins;
-  num? operatingMargins;
-  num? profitMargins;
-  String? financialCurrency;
-
-  FinancialData(
-      {this.maxAge,
-      this.currentPrice,
-      this.targetHighPrice,
-      this.targetLowPrice,
-      this.targetMeanPrice,
-      this.targetMedianPrice,
-      this.recommendationMean,
-      this.recommendationKey,
-      this.numberOfAnalystOpinions,
-      this.totalCash,
-      this.totalCashPerShare,
-      this.ebitda,
-      this.totalDebt,
-      this.quickRatio,
-      this.currentRatio,
-      this.totalRevenue,
-      this.debtToEquity,
-      this.revenuePerShare,
-      this.returnOnAssets,
-      this.returnOnEquity,
-      this.grossProfits,
-      this.freeCashflow,
-      this.operatingCashflow,
-      this.earningsGrowth,
-      this.revenueGrowth,
-      this.grossMargins,
-      this.ebitdaMargins,
-      this.operatingMargins,
-      this.profitMargins,
-      this.financialCurrency});
-
-  FinancialData.fromJson(Map<String, dynamic> json) {
-    maxAge = json["maxAge"];
-    currentPrice = json["currentPrice"];
-    targetHighPrice = json["targetHighPrice"];
-    targetLowPrice = json["targetLowPrice"];
-    targetMeanPrice = json["targetMeanPrice"];
-    targetMedianPrice = json["targetMedianPrice"];
-    recommendationMean = json["recommendationMean"];
-    recommendationKey = json["recommendationKey"];
-    numberOfAnalystOpinions = json["numberOfAnalystOpinions"];
-    totalCash = json["totalCash"];
-    totalCashPerShare = json["totalCashPerShare"];
-    ebitda = json["ebitda"];
-    totalDebt = json["totalDebt"];
-    quickRatio = json["quickRatio"];
-    currentRatio = json["currentRatio"];
-    totalRevenue = json["totalRevenue"];
-    debtToEquity = json["debtToEquity"];
-    revenuePerShare = json["revenuePerShare"];
-    returnOnAssets = json["returnOnAssets"];
-    returnOnEquity = json["returnOnEquity"];
-    grossProfits = json["grossProfits"];
-    freeCashflow = json["freeCashflow"];
-    operatingCashflow = json["operatingCashflow"];
-    earningsGrowth = json["earningsGrowth"];
-    revenueGrowth = json["revenueGrowth"];
-    grossMargins = json["grossMargins"];
-    ebitdaMargins = json["ebitdaMargins"];
-    operatingMargins = json["operatingMargins"];
-    profitMargins = json["profitMargins"];
-    financialCurrency = json["financialCurrency"];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["maxAge"] = maxAge;
-    _data["currentPrice"] = currentPrice;
-    _data["targetHighPrice"] = targetHighPrice;
-    _data["targetLowPrice"] = targetLowPrice;
-    _data["targetMeanPrice"] = targetMeanPrice;
-    _data["targetMedianPrice"] = targetMedianPrice;
-    _data["recommendationMean"] = recommendationMean;
-    _data["recommendationKey"] = recommendationKey;
-    _data["numberOfAnalystOpinions"] = numberOfAnalystOpinions;
-    _data["totalCash"] = totalCash;
-    _data["totalCashPerShare"] = totalCashPerShare;
-    _data["ebitda"] = ebitda;
-    _data["totalDebt"] = totalDebt;
-    _data["quickRatio"] = quickRatio;
-    _data["currentRatio"] = currentRatio;
-    _data["totalRevenue"] = totalRevenue;
-    _data["debtToEquity"] = debtToEquity;
-    _data["revenuePerShare"] = revenuePerShare;
-    _data["returnOnAssets"] = returnOnAssets;
-    _data["returnOnEquity"] = returnOnEquity;
-    _data["grossProfits"] = grossProfits;
-    _data["freeCashflow"] = freeCashflow;
-    _data["operatingCashflow"] = operatingCashflow;
-    _data["earningsGrowth"] = earningsGrowth;
-    _data["revenueGrowth"] = revenueGrowth;
-    _data["grossMargins"] = grossMargins;
-    _data["ebitdaMargins"] = ebitdaMargins;
-    _data["operatingMargins"] = operatingMargins;
-    _data["profitMargins"] = profitMargins;
-    _data["financialCurrency"] = financialCurrency;
     return _data;
   }
 }
 
 class Price {
   num? maxAge;
-  num? preMarketChangePercent;
-  num? preMarketChange;
-  String? preMarketTime;
-  num? preMarketPrice;
-  String? preMarketSource;
-  num? postMarketChangePercent;
-  num? postMarketChange;
-  String? postMarketTime;
-  num? postMarketPrice;
-  String? postMarketSource;
   num? regularMarketChangePercent;
   num? regularMarketChange;
   String? regularMarketTime;
@@ -553,16 +169,6 @@ class Price {
 
   Price(
       {this.maxAge,
-      this.preMarketChangePercent,
-      this.preMarketChange,
-      this.preMarketTime,
-      this.preMarketPrice,
-      this.preMarketSource,
-      this.postMarketChangePercent,
-      this.postMarketChange,
-      this.postMarketTime,
-      this.postMarketPrice,
-      this.postMarketSource,
       this.regularMarketChangePercent,
       this.regularMarketChange,
       this.regularMarketTime,
@@ -595,16 +201,6 @@ class Price {
 
   Price.fromJson(Map<String, dynamic> json) {
     maxAge = json["maxAge"];
-    preMarketChangePercent = json["preMarketChangePercent"];
-    preMarketChange = json["preMarketChange"];
-    preMarketTime = json["preMarketTime"];
-    preMarketPrice = json["preMarketPrice"];
-    preMarketSource = json["preMarketSource"];
-    postMarketChangePercent = json["postMarketChangePercent"];
-    postMarketChange = json["postMarketChange"];
-    postMarketTime = json["postMarketTime"];
-    postMarketPrice = json["postMarketPrice"];
-    postMarketSource = json["postMarketSource"];
     regularMarketChangePercent = json["regularMarketChangePercent"];
     regularMarketChange = json["regularMarketChange"];
     regularMarketTime = json["regularMarketTime"];
@@ -639,16 +235,6 @@ class Price {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["maxAge"] = maxAge;
-    _data["preMarketChangePercent"] = preMarketChangePercent;
-    _data["preMarketChange"] = preMarketChange;
-    _data["preMarketTime"] = preMarketTime;
-    _data["preMarketPrice"] = preMarketPrice;
-    _data["preMarketSource"] = preMarketSource;
-    _data["postMarketChangePercent"] = postMarketChangePercent;
-    _data["postMarketChange"] = postMarketChange;
-    _data["postMarketTime"] = postMarketTime;
-    _data["postMarketPrice"] = postMarketPrice;
-    _data["postMarketSource"] = postMarketSource;
     _data["regularMarketChangePercent"] = regularMarketChangePercent;
     _data["regularMarketChange"] = regularMarketChange;
     _data["regularMarketTime"] = regularMarketTime;
@@ -682,6 +268,146 @@ class Price {
   }
 }
 
+class QuoteType {
+  String? exchange;
+  String? quoteType;
+  String? symbol;
+  String? underlyingSymbol;
+  String? shortName;
+  String? longName;
+  String? firstTradeDateEpochUtc;
+  String? timeZoneFullName;
+  String? timeZoneShortName;
+  String? uuid;
+  String? messageBoardId;
+  num? gmtOffSetMilliseconds;
+  num? maxAge;
+
+  QuoteType(
+      {this.exchange,
+      this.quoteType,
+      this.symbol,
+      this.underlyingSymbol,
+      this.shortName,
+      this.longName,
+      this.firstTradeDateEpochUtc,
+      this.timeZoneFullName,
+      this.timeZoneShortName,
+      this.uuid,
+      this.messageBoardId,
+      this.gmtOffSetMilliseconds,
+      this.maxAge});
+
+  QuoteType.fromJson(Map<String, dynamic> json) {
+    exchange = json["exchange"];
+    quoteType = json["quoteType"];
+    symbol = json["symbol"];
+    underlyingSymbol = json["underlyingSymbol"];
+    shortName = json["shortName"];
+    longName = json["longName"];
+    firstTradeDateEpochUtc = json["firstTradeDateEpochUtc"];
+    timeZoneFullName = json["timeZoneFullName"];
+    timeZoneShortName = json["timeZoneShortName"];
+    uuid = json["uuid"];
+    messageBoardId = json["messageBoardId"];
+    gmtOffSetMilliseconds = json["gmtOffSetMilliseconds"];
+    maxAge = json["maxAge"];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["exchange"] = exchange;
+    _data["quoteType"] = quoteType;
+    _data["symbol"] = symbol;
+    _data["underlyingSymbol"] = underlyingSymbol;
+    _data["shortName"] = shortName;
+    _data["longName"] = longName;
+    _data["firstTradeDateEpochUtc"] = firstTradeDateEpochUtc;
+    _data["timeZoneFullName"] = timeZoneFullName;
+    _data["timeZoneShortName"] = timeZoneShortName;
+    _data["uuid"] = uuid;
+    _data["messageBoardId"] = messageBoardId;
+    _data["gmtOffSetMilliseconds"] = gmtOffSetMilliseconds;
+    _data["maxAge"] = maxAge;
+    return _data;
+  }
+}
+
+class SummaryProfile {
+  String? address1;
+  String? address2;
+  String? city;
+  String? state;
+  String? zip;
+  String? country;
+  String? phone;
+  String? website;
+  String? industry;
+  String? industryDisp;
+  String? sector;
+  String? longBusinessSummary;
+  num? fullTimeEmployees;
+  List<dynamic>? companyOfficers;
+  num? maxAge;
+
+  SummaryProfile(
+      {this.address1,
+      this.address2,
+      this.city,
+      this.state,
+      this.zip,
+      this.country,
+      this.phone,
+      this.website,
+      this.industry,
+      this.industryDisp,
+      this.sector,
+      this.longBusinessSummary,
+      this.fullTimeEmployees,
+      this.companyOfficers,
+      this.maxAge});
+
+  SummaryProfile.fromJson(Map<String, dynamic> json) {
+    address1 = json["address1"];
+    address2 = json["address2"];
+    city = json["city"];
+    state = json["state"];
+    zip = json["zip"];
+    country = json["country"];
+    phone = json["phone"];
+    website = json["website"];
+    industry = json["industry"];
+    industryDisp = json["industryDisp"];
+    sector = json["sector"];
+    longBusinessSummary = json["longBusinessSummary"];
+    fullTimeEmployees = json["fullTimeEmployees"];
+    companyOfficers = json["companyOfficers"] ?? [];
+    maxAge = json["maxAge"];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["address1"] = address1;
+    _data["address2"] = address2;
+    _data["city"] = city;
+    _data["state"] = state;
+    _data["zip"] = zip;
+    _data["country"] = country;
+    _data["phone"] = phone;
+    _data["website"] = website;
+    _data["industry"] = industry;
+    _data["industryDisp"] = industryDisp;
+    _data["sector"] = sector;
+    _data["longBusinessSummary"] = longBusinessSummary;
+    _data["fullTimeEmployees"] = fullTimeEmployees;
+    if (companyOfficers != null) {
+      _data["companyOfficers"] = companyOfficers;
+    }
+    _data["maxAge"] = maxAge;
+    return _data;
+  }
+}
+
 class SummaryDetail {
   num? maxAge;
   num? priceHnum;
@@ -695,8 +421,9 @@ class SummaryDetail {
   num? regularMarketDayHigh;
   num? dividendRate;
   num? dividendYield;
-  String? exDividendDate;
+  DateTime? exDividendDate;
   num? payoutRatio;
+  num? fiveYearAvgDividendYield;
   num? beta;
   num? trailingPe;
   num? forwardPe;
@@ -740,6 +467,7 @@ class SummaryDetail {
       this.dividendYield,
       this.exDividendDate,
       this.payoutRatio,
+      this.fiveYearAvgDividendYield,
       this.beta,
       this.trailingPe,
       this.forwardPe,
@@ -781,8 +509,9 @@ class SummaryDetail {
     regularMarketDayHigh = json["regularMarketDayHigh"];
     dividendRate = json["dividendRate"];
     dividendYield = json["dividendYield"];
-    exDividendDate = json["exDividendDate"];
+    exDividendDate = DateTime.parse(json["exDividendDate"]);
     payoutRatio = json["payoutRatio"];
+    fiveYearAvgDividendYield = json["fiveYearAvgDividendYield"];
     beta = json["beta"];
     trailingPe = json["trailingPE"];
     forwardPe = json["forwardPE"];
@@ -828,6 +557,7 @@ class SummaryDetail {
     _data["dividendYield"] = dividendYield;
     _data["exDividendDate"] = exDividendDate;
     _data["payoutRatio"] = payoutRatio;
+    _data["fiveYearAvgDividendYield"] = fiveYearAvgDividendYield;
     _data["beta"] = beta;
     _data["trailingPE"] = trailingPe;
     _data["forwardPE"] = forwardPe;
@@ -869,6 +599,7 @@ class AssetProfile {
   String? phone;
   String? website;
   String? industry;
+  String? industryDisp;
   String? sector;
   String? longBusinessSummary;
   num? fullTimeEmployees;
@@ -891,6 +622,7 @@ class AssetProfile {
       this.phone,
       this.website,
       this.industry,
+      this.industryDisp,
       this.sector,
       this.longBusinessSummary,
       this.fullTimeEmployees,
@@ -913,6 +645,7 @@ class AssetProfile {
     phone = json["phone"];
     website = json["website"];
     industry = json["industry"];
+    industryDisp = json["industryDisp"];
     sector = json["sector"];
     longBusinessSummary = json["longBusinessSummary"];
     fullTimeEmployees = json["fullTimeEmployees"];
@@ -941,6 +674,7 @@ class AssetProfile {
     _data["phone"] = phone;
     _data["website"] = website;
     _data["industry"] = industry;
+    _data["industryDisp"] = industryDisp;
     _data["sector"] = sector;
     _data["longBusinessSummary"] = longBusinessSummary;
     _data["fullTimeEmployees"] = fullTimeEmployees;
