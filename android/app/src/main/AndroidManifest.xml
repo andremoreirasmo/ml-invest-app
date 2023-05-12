@@ -2,7 +2,7 @@
     package="com.example.ml_invest_app">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="ml_invest_app"
+        android:label="ML Invest"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
