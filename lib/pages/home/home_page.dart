@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:ml_invest_app/pages/home/home_controller.dart';
 import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend/skeleton_stocks_by_trend.dart';
 import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend/stocks_by_trend.dart';
@@ -34,10 +35,11 @@ class HomePage extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 60),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
-                    children: const [
-                      Image(
-                        image:
-                            AssetImage('assets/images/undraw_robotics_kep.png'),
+                    children: [
+                      Lottie.asset(
+                        'assets/lottie/investing.json',
+                        width: 250,
+                        height: 230,
                       ),
                     ],
                   ),
