@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ml_invest_app/pages/home/home_controller.dart';
 import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend/skeleton_stocks_by_trend.dart';
 import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend/stocks_by_trend.dart';
+import 'package:ml_invest_app/shared/models/trend_stock_enum.dart';
 import 'package:ml_invest_app/shared/utils/widget_util.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -57,13 +58,13 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 30),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: homeController.stocksByTrend.entries
-                              .map(
-                                (entry) => StocksByTrend(
-                                  type: entry.key,
-                                  stocks: entry.value,
-                                ),
-                              )
+                          children: TrendStockEnum.values
+                              .where((type) => homeController.stocksByTrend
+                                  .containsKey(type))
+                              .map((type) => StocksByTrend(
+                                    type: type,
+                                    stocks: homeController.stocksByTrend[type],
+                                  ))
                               .toList()),
                     ),
                   ),
