@@ -14,23 +14,20 @@ class StocksByTrend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 10, left: 10),
-            child: Text(
-              type.description,
-              style: const TextStyle(color: Colors.white),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 10, left: 10),
+          child: Text(
+            type.description,
+            style: const TextStyle(color: Colors.white),
           ),
-          Column(
-            children: stocks!.map((e) => _getStock(e)).toList(),
-          ),
-        ],
-      ),
+        ),
+        Column(
+          children: stocks!.map((e) => _getStock(e)).toList(),
+        ),
+      ],
     );
   }
 
