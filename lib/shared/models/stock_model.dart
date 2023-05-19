@@ -1,7 +1,7 @@
 import 'package:ml_invest_app/shared/models/trend_stock_enum.dart';
 
 class StockModel {
-  num? id;
+  int? id;
   String? name;
   String? image;
   String? ticker;

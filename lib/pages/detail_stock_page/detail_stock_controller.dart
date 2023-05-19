@@ -34,8 +34,8 @@ class DetailStockController extends GetxController
   find() async {
     isDataLoading(true);
 
-    stock.value = await _stockService.findOne(
-        stock.value.id as int, selectedPeriod.value) as StockModel;
+    stock.value =
+        (await _stockService.findOne(stock.value.id!, selectedPeriod.value))!;
     isDataLoading(false);
   }
 
