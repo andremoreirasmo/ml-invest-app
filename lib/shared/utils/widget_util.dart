@@ -14,4 +14,12 @@ class WidgetUtil {
   static Widget showIf(bool value, Function() getWidget) {
     return (value) ? getWidget() : const SizedBox.shrink();
   }
+
+  static Widget showLoading(bool isLoading, Function() getWidget) {
+    return (isLoading)
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : getWidget();
+  }
 }

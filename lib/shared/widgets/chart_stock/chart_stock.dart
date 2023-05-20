@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ml_invest_app/shared/models/stock_model.dart';
+import 'package:ml_invest_app/shared/utils/widget_util.dart';
 import 'package:ml_invest_app/shared/widgets/chart_stock/chart_stock_enum.dart';
-import 'package:skeletons/skeletons.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartStock extends StatelessWidget {
-  final List<StockChartModel>? chartData;
+  final dynamic chartData;
   final Rx<ChartPeriodEnum> selectedPeriod;
   final Rx<bool> isLoading;
 
@@ -28,46 +28,35 @@ class ChartStock extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: const Color.fromARGB(132, 15, 15, 15)),
       ),
-      child: Obx(() => Skeleton(
-            isLoading: isLoading.value,
-            skeleton: const Center(
-              child: CircularProgressIndicator(),
-            ),
-            child: Column(
+      child: Obx(() => WidgetUtil.showLoading(
+            isLoading.value,
+            () => Column(
               children: [
                 SfCartesianChart(
-                    plotAreaBorderWidth: 0,
-                    backgroundColor: const Color.fromARGB(132, 15, 15, 15),
-                    primaryXAxis: DateTimeAxis(
-                        edgeLabelPlacement: EdgeLabelPlacement.shift,
-                        majorGridLines: const MajorGridLines(width: 0),
-                        intervalType: selectedPeriod.value.chartIntervalType),
-                    primaryYAxis: NumericAxis(
-                      axisLine: const AxisLine(width: 0),
-                      majorTickLines:
-                          const MajorTickLines(color: Colors.transparent),
-                    ),
-                    tooltipBehavior: TooltipBehavior(enable: true),
-                    series: <ChartSeries>[
-                      CandleSeries<StockChartModel, DateTime>(
-                        enableSolidCandles: true,
-                        name: 'Dados',
-                        dataSource: chartData!,
-                        xValueMapper: (StockChartModel data, _) => data.date,
-                        lowValueMapper: (StockChartModel data, _) => data.low,
-                        highValueMapper: (StockChartModel data, _) => data.high,
-                        openValueMapper: (StockChartModel data, _) => data.open,
-                        closeValueMapper: (StockChartModel data, _) =>
-                            data.close,
-                      ),
-                    ]),
+                  legend: Legend(
+                      isVisible: chartData is List<StockModel>,
+                      position: LegendPosition.bottom),
+                  plotAreaBorderWidth: 0,
+                  backgroundColor: const Color.fromARGB(132, 15, 15, 15),
+                  primaryXAxis: DateTimeAxis(
+                      edgeLabelPlacement: EdgeLabelPlacement.shift,
+                      majorGridLines: const MajorGridLines(width: 0),
+                      intervalType: selectedPeriod.value.chartIntervalType),
+                  primaryYAxis: NumericAxis(
+                    axisLine: const AxisLine(width: 0),
+                    majorTickLines:
+                        const MajorTickLines(color: Colors.transparent),
+                  ),
+                  tooltipBehavior: TooltipBehavior(enable: true),
+                  series: _getSeries(),
+                ),
                 Container(
                   color: const Color.fromARGB(132, 15, 15, 15),
                   child: Obx(() => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: ChartPeriodEnum.values
                             .map((e) =>
-                                getOptionPeriod(e, e == selectedPeriod.value))
+                                _getOptionPeriod(e, e == selectedPeriod.value))
                             .toList(),
                       )),
                 )
@@ -77,7 +66,7 @@ class ChartStock extends StatelessWidget {
     );
   }
 
-  Widget getOptionPeriod(ChartPeriodEnum option, bool active) {
+  Widget _getOptionPeriod(ChartPeriodEnum option, bool active) {
     return Expanded(
       child: SizedBox(
         height: 30,
@@ -102,5 +91,32 @@ class ChartStock extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<ChartSeries> _getSeries() {
+    if (chartData is List<StockChartModel>) {
+      return [
+        CandleSeries<StockChartModel, DateTime>(
+          enableSolidCandles: true,
+          name: 'Dados',
+          dataSource: chartData!,
+          xValueMapper: (StockChartModel data, _) => data.date,
+          lowValueMapper: (StockChartModel data, _) => data.low,
+          highValueMapper: (StockChartModel data, _) => data.high,
+          openValueMapper: (StockChartModel data, _) => data.open,
+          closeValueMapper: (StockChartModel data, _) => data.close,
+        )
+      ];
+    }
+
+    List<StockModel> stocks = chartData;
+
+    return stocks
+        .map((stock) => LineSeries<StockChartModel, DateTime>(
+            dataSource: stock.chart!,
+            name: stock.ticker!,
+            xValueMapper: (StockChartModel data, _) => data.date,
+            yValueMapper: (StockChartModel data, _) => data.close))
+        .toList();
   }
 }
