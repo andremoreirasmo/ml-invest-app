@@ -35,7 +35,7 @@ class DetailStockController extends GetxController
     isDataLoading(true);
 
     stock.value =
-        (await _stockService.findOne(stock.value.id!, selectedPeriod.value))!;
+        (await _stockService.find(stock.value.ticker!, selectedPeriod.value))!;
     isDataLoading(false);
   }
 

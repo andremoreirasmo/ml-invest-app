@@ -6,7 +6,7 @@ enum TrendStockEnum {
   down,
 }
 
-TrendStockEnum trendStockFromJson(int json) {
+TrendStockEnum trendStockFromJson(int? json) {
   switch (json) {
     case 0:
       return TrendStockEnum.up;
@@ -15,7 +15,7 @@ TrendStockEnum trendStockFromJson(int json) {
     case 2:
       return TrendStockEnum.down;
     default:
-      throw Exception('Invalid trend value: $json');
+      return TrendStockEnum.flat;
   }
 }
 

@@ -10,6 +10,7 @@ class CompareStockController extends GetxController {
   var isDataLoading = true.obs;
   var isChartLoading = false.obs;
   var selectedPeriod = ChartPeriodEnum.oneDay.obs;
+  List<String> tickersStocks = [];
 
   @override
   Future<void> onInit() async {
@@ -23,33 +24,35 @@ class CompareStockController extends GetxController {
     super.onReady();
 
     stocks(Get.arguments);
+    tickersStocks = stocks.map((e) => e.ticker!).toList();
     fetchData();
   }
 
   fetchData() async {
     isDataLoading(true);
 
-    var values = await Future.wait(stocks.map(
-        (stock) => _stockService.findOne(stock.id!, selectedPeriod.value)));
+    var list = await _stockService.find(tickersStocks, selectedPeriod.value);
 
-    var list = values
-        .where((element) => element != null)
-        .map((element) => element as StockModel)
-        .toList();
-
-    stocks(list);
+    stocks(list ?? <StockModel>[]);
     isDataLoading(false);
   }
 
   _findChart(ChartPeriodEnum period) async {
     isChartLoading(true);
 
-    await Future.wait(stocks.map((stock) async {
-      stock.chart =
-          await _stockService.findChart(stock.ticker!, selectedPeriod.value);
-    }));
+    List<StockModel>? charts =
+        await _stockService.findChart(tickersStocks, selectedPeriod.value);
+    if (charts != null) {
+      var mapCharts = Map.fromEntries(
+          charts.map((stock) => MapEntry(stock.ticker!, stock)));
 
-    stocks.refresh();
+      for (var stock in stocks) {
+        stock.chart = mapCharts[stock.ticker!]!.chart;
+      }
+
+      stocks.refresh();
+    }
+
     isChartLoading(false);
   }
 

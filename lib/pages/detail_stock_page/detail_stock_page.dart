@@ -9,6 +9,7 @@ import 'package:ml_invest_app/shared/utils/number_util.dart';
 import 'package:ml_invest_app/shared/utils/widget_util.dart';
 import 'package:ml_invest_app/shared/widgets/chart_stock/chart_stock.dart';
 import 'package:ml_invest_app/shared/widgets/default_app_bar.dart';
+import 'package:ml_invest_app/shared/widgets/price_variation.dart';
 import 'package:ml_invest_app/shared/widgets/ticker_stock/ticker_stock.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -111,10 +112,10 @@ class DetailStockPage extends StatelessWidget {
               child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                "$regularMarketChange ($regularMarketChangePercent%)",
-                style: const TextStyle(color: Colors.red, fontSize: 20),
-              ),
+              PriceVariation(
+                  regularMarketChange: price.regularMarketChange!,
+                  regularMarketChangePercent:
+                      price.regularMarketChangePercent!),
             ],
           ))
         ]));

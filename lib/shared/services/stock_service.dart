@@ -27,11 +27,19 @@ class StockService {
     }
   }
 
-  Future<StockModel?> findOne(int id, ChartPeriodEnum period) async {
+  Future<dynamic> find(dynamic tickers, ChartPeriodEnum period) async {
     try {
-      String uri = "$url/$id";
-      dynamic response =
-          await _http.get(uri, queryParams: {'period': period.queryParam});
+      String uri = "$url/find";
+      dynamic response = await _http.get(uri,
+          queryParams: {'ticker': tickers, 'period': period.queryParam});
+
+      if (tickers is List<String>) {
+        List<dynamic> stocks = response;
+
+        List<StockModel> result =
+            stocks.map((e) => StockModel.fromJson(e)).toList();
+        return result;
+      }
 
       return StockModel.fromJson(response);
     } catch (error) {
@@ -40,12 +48,15 @@ class StockService {
     }
   }
 
-  Future<List<StockChartModel>?> findChart(
-      String ticker, ChartPeriodEnum period) async {
+  Future<dynamic> findChart(dynamic tickers, ChartPeriodEnum period) async {
     try {
-      String uri = "$url/chart/$ticker";
-      List<dynamic> response =
-          await _http.get(uri, queryParams: {'period': period.queryParam});
+      String uri = "$url/chart";
+      List<dynamic> response = await _http.get(uri,
+          queryParams: {'ticker': tickers, 'period': period.queryParam});
+
+      if (tickers is List<String>) {
+        return response.map((e) => StockModel.fromJson(e)).toList();
+      }
 
       return response.map((e) => StockChartModel.fromJson(e)).toList();
     } catch (error) {
