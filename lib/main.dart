@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:ml_invest_app/pages/compare_stock/compare_stock_page.dart';
 import 'package:ml_invest_app/pages/detail_stock_page/detail_stock_page.dart';
+import 'package:ml_invest_app/pages/history_page.dart';
 import 'package:ml_invest_app/pages/home/home_controller.dart';
 import 'package:ml_invest_app/pages/home/home_page.dart';
-import 'package:ml_invest_app/pages/list_page.dart';
+import 'package:ml_invest_app/pages/login/login_page.dart';
 import 'package:ml_invest_app/pages/select_compare_stock_page/select_compare_stock_page.dart';
+import 'package:ml_invest_app/shared/controllers/login_controller.dart';
 import 'package:ml_invest_app/shared/utils/material_color.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
 import 'package:ml_invest_app/shared/widgets/fab_bottom_app_bar.dart';
 
-void main() {
+Future<void> main() async {
+  await GetStorage.init();
   Get.put(HomeController());
+  Get.put(LoginController());
 
   runApp(GetMaterialApp(
     theme: ThemeData(
@@ -25,6 +30,7 @@ void main() {
       GetPage(
           name: Routes.selectToCompareStock,
           page: () => SelectCompareStockPage()),
+      GetPage(name: Routes.login, page: () => LoginPage()),
     ],
   ));
 }
@@ -41,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _children = [
     HomePage(),
-    ListPage(),
+    HistoryPage(),
     Center(
       child: Text("Third Page"),
     ),

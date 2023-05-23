@@ -4,16 +4,31 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:ml_invest_app/shared/errors/models/app_exceptions.dart';
+import 'package:ml_invest_app/shared/models/http_client_enum.dart';
 
 class HttpClient {
-  Future<dynamic> get(String url, {Map<String, dynamic>? queryParams}) async {
+  Future<dynamic> request(HttpRequestEnum type, String url,
+      {Map<String, dynamic>? queryParams, String? authToken}) async {
     try {
       Uri parsedUri = Uri.parse(url);
+
       if (queryParams != null) {
         parsedUri = parsedUri.replace(queryParameters: queryParams);
       }
-      print(parsedUri);
-      http.Response response = await http.get(parsedUri);
+
+      Map<String, String>? headers;
+      if (authToken != null) {
+        headers = {'Authorization': 'Bearer $authToken'};
+      }
+
+      http.Response response;
+      switch (type) {
+        case HttpRequestEnum.post:
+          response = await http.post(parsedUri, headers: headers);
+          break;
+        default:
+          response = await http.get(parsedUri, headers: headers);
+      }
 
       return _processResponse(response);
     } on SocketException {

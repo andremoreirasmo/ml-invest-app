@@ -11,8 +11,12 @@ class WidgetUtil {
     return widgets;
   }
 
-  static Widget showIf(bool value, Function() getWidget) {
-    return (value) ? getWidget() : const SizedBox.shrink();
+  static Widget showIf(bool value, Function() getWidget, {Function()? elsif}) {
+    return (value)
+        ? getWidget()
+        : elsif != null
+            ? elsif()
+            : const SizedBox.shrink();
   }
 
   static Widget showLoading(bool isLoading, Function() getWidget) {

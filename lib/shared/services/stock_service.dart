@@ -1,4 +1,5 @@
 import 'package:ml_invest_app/shared/errors/error_handler.dart';
+import 'package:ml_invest_app/shared/models/http_client_enum.dart';
 import 'package:ml_invest_app/shared/models/stock_model.dart';
 import 'package:ml_invest_app/shared/models/trend_stock_model.dart';
 import 'package:ml_invest_app/shared/services/api_url.dart';
@@ -16,7 +17,7 @@ class StockService {
 
   Future<List<StockModel>> getAllStocks() async {
     try {
-      List<dynamic> response = await _http.get(url);
+      List<dynamic> response = await _http.request(HttpRequestEnum.get, url);
 
       var list = response.map((e) => StockModel.fromJson(e)).toList();
 
@@ -30,7 +31,7 @@ class StockService {
   Future<dynamic> find(dynamic tickers, ChartPeriodEnum period) async {
     try {
       String uri = "$url/find";
-      dynamic response = await _http.get(uri,
+      dynamic response = await _http.request(HttpRequestEnum.get, uri,
           queryParams: {'ticker': tickers, 'period': period.queryParam});
 
       if (tickers is List<String>) {
@@ -51,7 +52,7 @@ class StockService {
   Future<dynamic> findChart(dynamic tickers, ChartPeriodEnum period) async {
     try {
       String uri = "$url/chart";
-      List<dynamic> response = await _http.get(uri,
+      List<dynamic> response = await _http.request(HttpRequestEnum.get, uri,
           queryParams: {'ticker': tickers, 'period': period.queryParam});
 
       if (tickers is List<String>) {
@@ -68,7 +69,7 @@ class StockService {
   Future<LastTrendRefresh?> getLastRefreshTrend() async {
     try {
       String uri = "$url/trend/lastRefresh";
-      dynamic response = await _http.get(uri);
+      dynamic response = await _http.request(HttpRequestEnum.get, uri);
 
       return LastTrendRefresh.fromJson(response);
     } catch (error) {
