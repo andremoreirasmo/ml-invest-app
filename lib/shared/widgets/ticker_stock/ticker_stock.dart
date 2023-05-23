@@ -7,12 +7,18 @@ class TickerStock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        width: 85,
         margin: const EdgeInsets.only(left: 10, right: 10),
-        padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+        padding: const EdgeInsets.only(top: 5, bottom: 5),
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             color: Color.fromRGBO(217, 217, 217, 1)),
-        child: Text(title,
-            style: const TextStyle(color: Colors.black, fontSize: 14)));
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(title,
+                style: const TextStyle(color: Colors.black, fontSize: 14)),
+          ],
+        ));
   }
 }
