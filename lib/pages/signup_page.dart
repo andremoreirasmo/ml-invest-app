@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:ml_invest_app/shared/controllers/login_controller.dart';
 import 'package:ml_invest_app/shared/styles/app_colors.dart';
-import 'package:ml_invest_app/shared/utils/routes.dart';
 import 'package:ml_invest_app/shared/widgets/custom_button.dart';
 import 'package:ml_invest_app/shared/widgets/custom_formfield.dart';
 import 'package:ml_invest_app/shared/widgets/custom_header.dart';
-import 'package:ml_invest_app/shared/widgets/custom_richtext.dart';
 import 'package:ml_invest_app/shared/widgets/password_formfield.dart';
 
-class LoginPage extends StatelessWidget {
-  final LoginController _loginController = Get.find();
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
-  LoginPage({Key? key}) : super(key: key);
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
 
+class _SignUpPageState extends State<SignUpPage> {
+  final _userName = TextEditingController();
   final _emailController = TextEditingController();
-
   final _passwordController = TextEditingController();
 
+  String get userName => _userName.text.trim();
   String get email => _emailController.text.trim();
-
   String get password => _passwordController.text.trim();
 
   @override
@@ -35,7 +34,7 @@ class LoginPage extends StatelessWidget {
             color: AppColors.darkGreen,
           ),
           const CustomHeader(
-            text: 'Sign In',
+            text: 'Sign Up',
           ),
           Positioned(
             top: MediaQuery.of(context).size.height * 0.08,
@@ -45,8 +44,8 @@ class LoginPage extends StatelessWidget {
               decoration: const BoxDecoration(
                   color: AppColors.backgroundColor,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40))),
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -60,17 +59,30 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 24,
+                    height: 16,
+                  ),
+                  CustomFormField(
+                    headingText: "Nome",
+                    hintText: "Nome",
+                    obsecureText: false,
+                    suffixIcon: const SizedBox(),
+                    maxLines: 1,
+                    textInputAction: TextInputAction.done,
+                    textInputType: TextInputType.text,
+                    controller: _userName,
+                  ),
+                  const SizedBox(
+                    height: 16,
                   ),
                   CustomFormField(
                     headingText: "Email",
                     hintText: "Email",
                     obsecureText: false,
                     suffixIcon: const SizedBox(),
-                    controller: _emailController,
                     maxLines: 1,
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.emailAddress,
+                    controller: _emailController,
                   ),
                   const SizedBox(
                     height: 16,
@@ -83,24 +95,19 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  Obx(() => CustomButton(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.05,
-                        onTap: () async {
-                          var result =
-                              await _loginController.login(email, password);
-
-                          if (result) {
-                            Get.back();
-                          }
-                        },
-                        text: 'Sign In',
-                        isLoading: _loginController.isLogIn.value,
-                      )),
-                  CustomRichText(
-                    discription: "Não tem uma conta ainda? ",
-                    text: "Sign Up",
-                    onTap: () => Get.toNamed(Routes.signUp),
+                  PasswordFormField(
+                    headingText: "Confirme a senha",
+                    hintText: "Confirme a senha",
+                    controller: _passwordController,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  CustomButton(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    onTap: () {},
+                    text: 'Sign Up',
                   ),
                 ],
               ),

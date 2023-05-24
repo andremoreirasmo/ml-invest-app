@@ -12,11 +12,11 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WidgetUtil.showIf(
-        _loginController.user.value != null,
-        () => Text("Logado"),
-        elsif: () => NeedLogin(),
-      ),
+      body: Obx(() => WidgetUtil.showIf(
+            _loginController.user.value != null,
+            () => Center(child: Text("Logado")),
+            elsif: () => NeedLogin(),
+          )),
     );
   }
 }

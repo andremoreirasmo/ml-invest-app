@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:ml_invest_app/shared/styles/app_colors.dart';
 
 class DefaultAppBar extends AppBar {
   DefaultAppBar({
@@ -12,7 +12,7 @@ class DefaultAppBar extends AppBar {
             title: title,
             actions: actions,
             centerTitle: false,
-            backgroundColor: const Color.fromRGBO(69, 89, 62, 1),
+            backgroundColor: AppColors.darkGreen,
             toolbarHeight: 43,
             leading: leading);
 }

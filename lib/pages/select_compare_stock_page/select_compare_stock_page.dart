@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ml_invest_app/pages/home/home_controller.dart';
 import 'package:ml_invest_app/pages/select_compare_stock_page/select_compare_stock_controller.dart';
+import 'package:ml_invest_app/shared/styles/app_colors.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
 import 'package:ml_invest_app/shared/utils/widget_util.dart';
 import 'package:ml_invest_app/shared/widgets/default_app_bar.dart';
@@ -83,16 +84,17 @@ class SelectCompareStockPage extends StatelessWidget {
       floatingActionButton: Obx(() => WidgetUtil.showIf(
           controller.selectedStocks.length > 1,
           () => FloatingActionButton(
-                onPressed: () {
-                  Get.offAndToNamed(Routes.compareStock,
-                      arguments: controller.selectedStocks.toList());
-                },
-                tooltip: 'Comparar',
-                elevation: 2.0,
-                backgroundColor: const Color.fromRGBO(84, 84, 84, 1),
-                child: const Icon(Icons.send,
-                    color: Color.fromRGBO(44, 157, 4, 1)),
-              ))),
+              onPressed: () {
+                Get.offAndToNamed(Routes.compareStock,
+                    arguments: controller.selectedStocks.toList());
+              },
+              tooltip: 'Comparar',
+              elevation: 2.0,
+              backgroundColor: const Color.fromRGBO(84, 84, 84, 1),
+              child: const Icon(
+                Icons.send,
+                color: AppColors.green,
+              )))),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:ml_invest_app/pages/home/home_controller.dart';
 import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend/skeleton_stocks_by_trend.dart';
 import 'package:ml_invest_app/pages/home/widgets/stocks_by_trend/stocks_by_trend.dart';
 import 'package:ml_invest_app/shared/models/trend_stock_enum.dart';
+import 'package:ml_invest_app/shared/styles/app_colors.dart';
 import 'package:ml_invest_app/shared/utils/date_util.dart';
 import 'package:ml_invest_app/shared/utils/widget_util.dart';
 import 'package:skeletons/skeletons.dart';
@@ -57,7 +58,7 @@ class HomePage extends StatelessWidget {
                         children: WidgetUtil.getWidgets(
                             3, () => const SkeletonStocksByTrend())),
                     child: Container(
-                      color: const Color.fromRGBO(48, 48, 48, 1),
+                      color: AppColors.backgroundColor,
                       padding: const EdgeInsets.only(bottom: 30),
                       child: Column(
                         children: [

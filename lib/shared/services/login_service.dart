@@ -8,9 +8,10 @@ class LoginService {
   final HttpClient _http = HttpClient();
   static String url = "${ApiUrl.url}/auth/login";
 
-  Future<UserModel?> login(String username, String password) async {
+  Future<UserModel?> login(String email, String password) async {
     try {
-      dynamic response = await _http.request(HttpRequestEnum.post, url);
+      dynamic response = await _http.request(HttpRequestEnum.post, url,
+          body: {'username': email, 'password': password});
 
       return UserModel.fromJson(response);
     } catch (error) {

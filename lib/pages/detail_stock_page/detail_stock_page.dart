@@ -80,10 +80,6 @@ class DetailStockPage extends StatelessWidget {
 
   Widget _getPriceInfo() {
     Price price = controller.stock.value.summary!.price!;
-    String regularMarketChange =
-        NumberUtil.formatValue(price.regularMarketChange);
-    String regularMarketChangePercent =
-        NumberUtil.formatValue(price.regularMarketChangePercent);
 
     return Container(
         padding: const EdgeInsets.all(15),

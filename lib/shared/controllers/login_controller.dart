@@ -8,16 +8,18 @@ class LoginController extends GetxController {
   final _box = GetStorage();
   final LoginService _loginService = LoginService();
   final UserService _userService = UserService();
-  final Rx<UserModel?> user = null.obs;
+  final Rx<UserModel?> user = Rx<UserModel?>(null);
+  final isLogIn = false.obs;
 
   @override
   Future<void> onReady() async {
     super.onReady();
+
     verifyIfIsLoggedIn();
   }
 
-  Future<bool> login(String username, String password) async {
-    var loggedUser = await _loginService.login(username, password);
+  Future<bool> login(String email, String password) async {
+    var loggedUser = await _loginService.login(email, password);
 
     var loggedIn = loggedUser != null;
 

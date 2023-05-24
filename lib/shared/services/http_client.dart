@@ -7,8 +7,13 @@ import 'package:ml_invest_app/shared/errors/models/app_exceptions.dart';
 import 'package:ml_invest_app/shared/models/http_client_enum.dart';
 
 class HttpClient {
-  Future<dynamic> request(HttpRequestEnum type, String url,
-      {Map<String, dynamic>? queryParams, String? authToken}) async {
+  Future<dynamic> request(
+    HttpRequestEnum type,
+    String url, {
+    Map<String, dynamic>? queryParams,
+    String? authToken,
+    Object? body,
+  }) async {
     try {
       Uri parsedUri = Uri.parse(url);
 
@@ -24,7 +29,7 @@ class HttpClient {
       http.Response response;
       switch (type) {
         case HttpRequestEnum.post:
-          response = await http.post(parsedUri, headers: headers);
+          response = await http.post(parsedUri, headers: headers, body: body);
           break;
         default:
           response = await http.get(parsedUri, headers: headers);

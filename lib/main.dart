@@ -8,7 +8,9 @@ import 'package:ml_invest_app/pages/home/home_controller.dart';
 import 'package:ml_invest_app/pages/home/home_page.dart';
 import 'package:ml_invest_app/pages/login/login_page.dart';
 import 'package:ml_invest_app/pages/select_compare_stock_page/select_compare_stock_page.dart';
+import 'package:ml_invest_app/pages/signup_page.dart';
 import 'package:ml_invest_app/shared/controllers/login_controller.dart';
+import 'package:ml_invest_app/shared/styles/app_colors.dart';
 import 'package:ml_invest_app/shared/utils/material_color.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
 import 'package:ml_invest_app/shared/widgets/fab_bottom_app_bar.dart';
@@ -20,8 +22,8 @@ Future<void> main() async {
 
   runApp(GetMaterialApp(
     theme: ThemeData(
-        primarySwatch: createMaterialColor(Color.fromRGBO(97, 97, 97, 1)),
-        scaffoldBackgroundColor: const Color.fromRGBO(48, 48, 48, 1)),
+        primarySwatch: createMaterialColor(AppColors.darkGreen),
+        scaffoldBackgroundColor: AppColors.backgroundColor),
     initialRoute: '/',
     getPages: [
       GetPage(name: Routes.home, page: () => const MyHomePage()),
@@ -31,6 +33,7 @@ Future<void> main() async {
           name: Routes.selectToCompareStock,
           page: () => SelectCompareStockPage()),
       GetPage(name: Routes.login, page: () => LoginPage()),
+      GetPage(name: Routes.signUp, page: () => SignUpPage()),
     ],
   ));
 }
@@ -79,19 +82,20 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed(Routes.selectToCompareStock);
-        },
-        tooltip: 'Comparar',
-        elevation: 2.0,
-        backgroundColor: const Color.fromRGBO(84, 84, 84, 1),
-        child: const Icon(Icons.currency_exchange,
-            color: Color.fromRGBO(44, 157, 4, 1)),
-      ),
+          onPressed: () {
+            Get.toNamed(Routes.selectToCompareStock);
+          },
+          tooltip: 'Comparar',
+          elevation: 2.0,
+          backgroundColor: const Color.fromRGBO(84, 84, 84, 1),
+          child: const Icon(
+            Icons.currency_exchange,
+            color: AppColors.green,
+          )),
       bottomNavigationBar: FABBottomAppBar(
         centerItemText: '',
         color: Colors.grey,
-        selectedColor: const Color.fromRGBO(44, 157, 4, 1),
+        selectedColor: AppColors.green,
         notchedShape: const CircularNotchedRectangle(),
         onTabSelected: _selectedTab,
         backgroundColor: const Color.fromRGBO(68, 68, 68, 1),

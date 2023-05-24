@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
+import 'package:ml_invest_app/shared/widgets/custom_button.dart';
 
 class NeedLogin extends StatelessWidget {
   const NeedLogin({super.key});
@@ -26,9 +27,11 @@ class NeedLogin extends StatelessWidget {
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => Get.toNamed(Routes.login),
-              child: const Text('Login'),
+            CustomButton(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.05,
+              onTap: () => Get.toNamed(Routes.login),
+              text: 'Sign In',
             ),
           ],
         ),
