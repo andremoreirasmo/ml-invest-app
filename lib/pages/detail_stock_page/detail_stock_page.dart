@@ -11,7 +11,6 @@ import 'package:ml_invest_app/shared/widgets/chart_stock/chart_stock.dart';
 import 'package:ml_invest_app/shared/widgets/default_app_bar.dart';
 import 'package:ml_invest_app/shared/widgets/price_variation.dart';
 import 'package:ml_invest_app/shared/widgets/ticker_stock/ticker_stock.dart';
-import 'package:skeletons/skeletons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailStockPage extends StatelessWidget {
@@ -35,45 +34,41 @@ class DetailStockPage extends StatelessWidget {
       ),
       body: RefreshIndicator(
           onRefresh: () => controller.find(),
-          child: Obx(() => Skeleton(
-                isLoading: controller.isDataLoading.value,
-                skeleton: const Center(child: CircularProgressIndicator()),
-                child: WidgetUtil.showIf(
-                    !controller.isDataLoading.value,
-                    () => ListView.builder(
-                        itemCount: 1,
-                        itemBuilder: (context, index) => Column(
-                              children: [
-                                _getPriceInfo(),
-                                Obx(() => ChartStock(
-                                    chartData: controller.stock.value.chart!,
-                                    selectedPeriod: controller.selectedPeriod,
-                                    isLoading: controller.isChartLoading)),
-                                Container(
-                                  color: Colors.grey[900],
-                                  height: 50,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(controller.stock.value.trend!.icon,
-                                          color: controller
-                                              .stock.value.trend!.color,
-                                          size: 30),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        controller
-                                            .stock.value.trend!.description,
-                                        style: const TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                      )
-                                    ],
+          child: Obx(() => WidgetUtil.showLoading(
+                controller.isDataLoading.value,
+                () => ListView.builder(
+                    itemCount: 1,
+                    itemBuilder: (context, index) => Column(
+                          children: [
+                            _getPriceInfo(),
+                            Obx(() => ChartStock(
+                                chartData: controller.stock.value.chart!,
+                                selectedPeriod: controller.selectedPeriod,
+                                isLoading: controller.isChartLoading)),
+                            Container(
+                              color: Colors.grey[900],
+                              height: 50,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(controller.stock.value.trend!.icon,
+                                      color:
+                                          controller.stock.value.trend!.color,
+                                      size: 30),
+                                  const SizedBox(
+                                    width: 10,
                                   ),
-                                ),
-                                _getTabs()
-                              ],
-                            ))),
+                                  Text(
+                                    controller.stock.value.trend!.description,
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                  )
+                                ],
+                              ),
+                            ),
+                            _getTabs()
+                          ],
+                        )),
               ))),
     );
   }

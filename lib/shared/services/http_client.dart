@@ -21,15 +21,16 @@ class HttpClient {
         parsedUri = parsedUri.replace(queryParameters: queryParams);
       }
 
-      Map<String, String>? headers;
+      Map<String, String>? headers = {"Content-Type": "application/json"};
       if (authToken != null) {
-        headers = {'Authorization': 'Bearer $authToken'};
+        headers["Authorization"] = 'Bearer $authToken';
       }
 
       http.Response response;
       switch (type) {
         case HttpRequestEnum.post:
-          response = await http.post(parsedUri, headers: headers, body: body);
+          response = await http.post(parsedUri,
+              headers: headers, body: json.encode(body));
           break;
         default:
           response = await http.get(parsedUri, headers: headers);

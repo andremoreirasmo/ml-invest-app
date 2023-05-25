@@ -19,16 +19,21 @@ class LoginController extends GetxController {
   }
 
   Future<bool> login(String email, String password) async {
-    var loggedUser = await _loginService.login(email, password);
+    isLogIn(true);
+    try {
+      var loggedUser = await _loginService.login(email, password);
 
-    var loggedIn = loggedUser != null;
+      var loggedIn = loggedUser != null;
 
-    if (loggedIn) {
-      _box.write('access_token', loggedUser.accessToken);
-      user(loggedUser);
+      if (loggedIn) {
+        _box.write('access_token', loggedUser.accessToken);
+        user(loggedUser);
+      }
+
+      return loggedIn;
+    } finally {
+      isLogIn(false);
     }
-
-    return loggedIn;
   }
 
   verifyIfIsLoggedIn() async {

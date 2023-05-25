@@ -15,6 +15,8 @@ import 'package:ml_invest_app/shared/utils/material_color.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
 import 'package:ml_invest_app/shared/widgets/fab_bottom_app_bar.dart';
 
+import 'pages/account/account_page.dart';
+
 Future<void> main() async {
   await GetStorage.init();
   Get.put(HomeController());
@@ -51,9 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _children = [
     HomePage(),
     HistoryPage(),
-    Center(
-      child: Text("Third Page"),
-    ),
+    AccountPage(),
     Center(
       child: Text("Four Page"),
     ),
