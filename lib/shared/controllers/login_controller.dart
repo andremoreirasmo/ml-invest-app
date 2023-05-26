@@ -14,8 +14,6 @@ class LoginController extends GetxController {
   @override
   Future<void> onReady() async {
     super.onReady();
-
-    verifyIfIsLoggedIn();
   }
 
   Future<bool> login(String email, String password) async {
@@ -36,7 +34,7 @@ class LoginController extends GetxController {
     }
   }
 
-  verifyIfIsLoggedIn() async {
+  loadUser() async {
     String? token = _box.read('access_token');
 
     if (token != null) {

@@ -1,4 +1,5 @@
 class Routes {
+  static const String splash = '/splash';
   static const String home = '/';
   static const String detailStock = '/detailStock';
   static const String selectToCompareStock = '/selectToCompareStock';

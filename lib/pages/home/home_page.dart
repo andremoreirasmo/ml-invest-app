@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: RefreshIndicator(
         edgeOffset: 260,
-        onRefresh: () => homeController.fethData(),
+        onRefresh: () => homeController.fetchData(),
         child: CustomScrollView(
           slivers: [
             SliverAppBar(

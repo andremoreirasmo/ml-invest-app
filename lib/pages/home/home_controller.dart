@@ -23,13 +23,12 @@ class HomeController extends GetxController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    fethData();
   }
 
   @override
   void onClose() {}
 
-  fethData() async {
+  fetchData() async {
     try {
       isDataLoading(true);
 
