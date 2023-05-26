@@ -1,13 +1,16 @@
 import 'package:ml_invest_app/shared/models/stock_model.dart';
+import 'package:ml_invest_app/shared/utils/date_util.dart';
 
 class StockComparisonModel {
-  String? createdAt;
+  String? id;
+  DateTime? createdAt;
   List<StockModel>? stocks;
 
-  StockComparisonModel({this.createdAt, this.stocks});
+  StockComparisonModel({this.id, this.createdAt, this.stocks});
 
   StockComparisonModel.fromJson(Map<String, dynamic> json) {
-    createdAt = json["createdAt"];
+    id = json["id"];
+    createdAt = DateUtil.dateFromUTCZero(json["createdAt"]);
     stocks = json["stocks"] == null
         ? null
         : (json["stocks"] as List).map((e) => StockModel.fromJson(e)).toList();

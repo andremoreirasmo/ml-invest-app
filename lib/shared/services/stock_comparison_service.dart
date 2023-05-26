@@ -7,7 +7,7 @@ import 'package:ml_invest_app/shared/services/http_client.dart';
 
 class StockComparisonService {
   final HttpClient _http = HttpClient();
-  final String authToken;
+  String authToken;
   static String url = "${ApiUrl.url}/stock-comparison";
 
   StockComparisonService(this.authToken);
@@ -31,6 +31,18 @@ class StockComparisonService {
           body: {"stocks": stocks.map((e) => e.id!).toList()});
     } catch (error) {
       ErrorHandler.handleError(error);
+    }
+  }
+
+  Future<bool> delete(StockComparisonModel comparison) async {
+    try {
+      String uri = "$url/${comparison.id!}";
+
+      await _http.request(HttpRequestEnum.delete, uri, authToken: authToken);
+      return true;
+    } catch (error) {
+      ErrorHandler.handleError(error);
+      return false;
     }
   }
 }
