@@ -32,6 +32,11 @@ class HttpClient {
           response = await http.post(parsedUri,
               headers: headers, body: json.encode(body));
           break;
+
+        case HttpRequestEnum.delete:
+          response = await http.delete(parsedUri, headers: headers);
+          break;
+
         default:
           response = await http.get(parsedUri, headers: headers);
       }

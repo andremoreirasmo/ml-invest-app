@@ -1,1 +1,1 @@
-enum HttpRequestEnum { get, post }
+enum HttpRequestEnum { get, post, delete }
