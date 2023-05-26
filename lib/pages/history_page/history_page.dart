@@ -22,42 +22,49 @@ class HistoryPage extends StatelessWidget {
                       onRefresh: () => _controller.fetchData(),
                       child: ListView(children: [
                         Container(
-                          padding: const EdgeInsets.only(
-                              top: 30, left: 20, right: 20),
+                          padding: const EdgeInsets.only(bottom: 30),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                "Últimas ações comparadas",
-                                style: TextStyle(
-                                    color: Color(0xFFF8F9FA),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    top: 30, left: 20, right: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Últimas ações comparadas",
+                                      style: TextStyle(
+                                          color: Color(0xFFF8F9FA),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    Divider(
+                                      height: 13,
+                                      thickness: 1,
+                                      color: Colors.grey[600],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Divider(
-                                height: 13,
-                                thickness: 1,
-                                color: Colors.grey[600],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              Obx(() => WidgetUtil.showIf(
+                                    _controller.comparisons.isNotEmpty,
+                                    () => Column(
+                                      children: _controller.comparisons
+                                          .map((e) => _getComparison(e))
+                                          .toList(),
+                                    ),
+                                    elsif: () => Lottie.asset(
+                                        "assets/lottie/no-data.json"),
+                                  )),
                             ],
                           ),
                         ),
-                        Obx(() => WidgetUtil.showIf(
-                              _controller.comparisons.isNotEmpty,
-                              () => Column(
-                                children: _controller.comparisons
-                                    .map((e) => _getComparison(e))
-                                    .toList(),
-                              ),
-                              elsif: () =>
-                                  Lottie.asset("assets/lottie/no-data.json"),
-                            )),
                       ]),
                     ))))));
   }
