@@ -8,29 +8,29 @@ import 'package:ml_invest_app/pages/login/login_page.dart';
 import 'package:ml_invest_app/pages/select_compare_stock_page/select_compare_stock_page.dart';
 import 'package:ml_invest_app/pages/signup_page.dart';
 import 'package:ml_invest_app/pages/splash_screen/splash_screen.dart';
-import 'package:ml_invest_app/shared/controllers/Init_controller.dart';
-import 'package:ml_invest_app/shared/controllers/login_controller.dart';
 import 'package:ml_invest_app/shared/styles/app_colors.dart';
 import 'package:ml_invest_app/shared/utils/material_color.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
 import 'package:ml_invest_app/shared/widgets/fab_bottom_app_bar.dart';
 
 import 'pages/account/account_page.dart';
-import 'pages/home/home_controller.dart';
+import 'shared/bindings/root_binding.dart';
 
 Future<void> main() async {
-  Get.put(HomeController());
-  Get.put(LoginController());
-  Get.put(InitController());
-
   runApp(GetMaterialApp(
     theme: ThemeData(
         primarySwatch: createMaterialColor(AppColors.darkGreen),
         scaffoldBackgroundColor: AppColors.backgroundColor),
     initialRoute: Routes.splash,
     getPages: [
-      GetPage(name: Routes.splash, page: () => const SplashScreen()),
-      GetPage(name: Routes.home, page: () => const MyHomePage()),
+      GetPage(
+          name: Routes.splash,
+          page: () => const SplashScreen(),
+          binding: RootBinding()),
+      GetPage(
+          name: Routes.home,
+          page: () => const MyHomePage(),
+          binding: RootBinding()),
       GetPage(name: Routes.compareStock, page: () => CompareStockPage()),
       GetPage(name: Routes.detailStock, page: () => DetailStockPage()),
       GetPage(

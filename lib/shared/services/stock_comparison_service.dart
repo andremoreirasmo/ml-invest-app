@@ -1,16 +1,19 @@
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:ml_invest_app/shared/errors/error_handler.dart';
 import 'package:ml_invest_app/shared/models/http_client_enum.dart';
 import 'package:ml_invest_app/shared/models/stock_comparison_model.dart';
 import 'package:ml_invest_app/shared/models/stock_model.dart';
+import 'package:ml_invest_app/shared/models/user_model.dart';
 import 'package:ml_invest_app/shared/services/api_url.dart';
 import 'package:ml_invest_app/shared/services/http_client.dart';
 
 class StockComparisonService {
   final HttpClient _http = HttpClient();
-  String authToken;
+  final Rx<UserModel?> user;
   static String url = "${ApiUrl.url}/stock-comparison";
+  String get authToken => user.value!.accessToken!;
 
-  StockComparisonService(this.authToken);
+  StockComparisonService(this.user);
 
   Future<List<StockComparisonModel>?> findAll() async {
     try {
@@ -24,13 +27,16 @@ class StockComparisonService {
     }
   }
 
-  Future<void> save(List<StockModel> stocks) async {
+  Future<StockComparisonModel?> save(List<StockModel> stocks) async {
     try {
-      await _http.request(HttpRequestEnum.post, url,
+      dynamic response = await _http.request(HttpRequestEnum.post, url,
           authToken: authToken,
           body: {"stocks": stocks.map((e) => e.id!).toList()});
+
+      return StockComparisonModel.fromJson(response);
     } catch (error) {
       ErrorHandler.handleError(error);
+      return null;
     }
   }
 

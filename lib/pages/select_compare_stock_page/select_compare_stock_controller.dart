@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
+import 'package:ml_invest_app/pages/history_page/history_controller.dart';
 import 'package:ml_invest_app/shared/controllers/login_controller.dart';
 import 'package:ml_invest_app/shared/models/stock_model.dart';
-import 'package:ml_invest_app/shared/services/stock_comparison_service.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
 
 class SelectCompareStockController extends GetxController {
@@ -23,10 +23,9 @@ class SelectCompareStockController extends GetxController {
     Get.offAndToNamed(Routes.compareStock, arguments: selectedStocks);
 
     if (_loginController.user.value != null) {
-      var stockComparisonService =
-          StockComparisonService(_loginController.user.value!.accessToken!);
+      HistoryController historyController = Get.find();
 
-      stockComparisonService.save(selectedStocks);
+      historyController.save(selectedStocks);
     }
   }
 

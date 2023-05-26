@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:ml_invest_app/shared/controllers/login_controller.dart';
 import 'package:ml_invest_app/shared/models/stock_comparison_model.dart';
+import 'package:ml_invest_app/shared/models/stock_model.dart';
 import 'package:ml_invest_app/shared/services/stock_comparison_service.dart';
 
 class HistoryController extends GetxController {
   final LoginController _loginController = Get.find();
-  final StockComparisonService _stockComparisonService =
-      StockComparisonService("");
+  StockComparisonService? _stockComparisonService;
 
   var comparisons = <StockComparisonModel>[].obs;
   var isDataLoading = true.obs;
@@ -20,28 +20,33 @@ class HistoryController extends GetxController {
   Future<void> onReady() async {
     super.onReady();
 
-    if (_loginController.user != null) {
-      _stockComparisonService.authToken =
-          _loginController.user.value!.accessToken!;
+    _stockComparisonService = StockComparisonService(_loginController.user);
 
-      fetchData();
-    }
+    _loginController.user.listen((user) => fetchData());
   }
 
   fetchData() async {
     isDataLoading(true);
 
-    var list = await _stockComparisonService.findAll();
+    var list = await _stockComparisonService!.findAll();
 
     comparisons(list ?? <StockComparisonModel>[]);
     isDataLoading(false);
   }
 
   delete(StockComparisonModel comparison) async {
-    var deleted = await _stockComparisonService.delete(comparison);
+    var deleted = await _stockComparisonService!.delete(comparison);
 
     if (deleted) {
       comparisons.remove(comparison);
+    }
+  }
+
+  save(List<StockModel> stocks) async {
+    var created = await _stockComparisonService!.save(stocks);
+
+    if (created != null) {
+      comparisons.insert(0, created);
     }
   }
 

@@ -88,11 +88,13 @@ class HistoryPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          comparison.stocks!.map((e) => e.ticker).join(', '),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(color: Colors.white),
+                        Expanded(
+                          child: Text(
+                            comparison.stocks!.map((e) => e.ticker).join(', '),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
                         InkWell(
                             onTap: () => _controller.delete(comparison),
