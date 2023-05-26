@@ -17,7 +17,7 @@ class CompareStockPage extends StatelessWidget {
 
   CompareStockPage({super.key});
 
-  List<StockModel> selectedStocks = Get.arguments;
+  final List<StockModel> selectedStocks = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
