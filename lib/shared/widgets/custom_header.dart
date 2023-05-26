@@ -26,7 +26,7 @@ class CustomHeader extends StatelessWidget {
           ),
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Color(0xFFF8F9FA),
                 fontSize: 28,
                 fontWeight: FontWeight.w700),
