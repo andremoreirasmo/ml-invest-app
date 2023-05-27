@@ -13,6 +13,7 @@ import 'package:ml_invest_app/shared/utils/material_color.dart';
 import 'package:ml_invest_app/shared/utils/routes.dart';
 import 'package:ml_invest_app/shared/widgets/fab_bottom_app_bar.dart';
 
+import 'pages/about_page.dart';
 import 'pages/account/account_page.dart';
 import 'shared/bindings/root_binding.dart';
 
@@ -56,9 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HomePage(),
     HistoryPage(),
     AccountPage(),
-    Center(
-      child: Text("Four Page"),
-    ),
+    const AboutPage(),
   ];
 
   void _selectedTab(int index) {
