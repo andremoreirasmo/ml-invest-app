@@ -46,4 +46,9 @@ class LoginController extends GetxController {
       }
     }
   }
+
+  logout() {
+    _box.remove('access_token');
+    user.value = null;
+  }
 }

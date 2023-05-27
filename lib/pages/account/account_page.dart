@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ml_invest_app/shared/controllers/login_controller.dart';
+import 'package:ml_invest_app/pages/account/account_controller.dart';
 import 'package:ml_invest_app/shared/styles/app_colors.dart';
+import 'package:ml_invest_app/shared/utils/date_util.dart';
 import 'package:ml_invest_app/shared/widgets/need_login.dart';
 
 class AccountPage extends StatelessWidget {
-  final LoginController _loginController = Get.find();
+  final AccountController _controller = AccountController();
   AccountPage({super.key});
 
   @override
@@ -18,7 +19,7 @@ class AccountPage extends StatelessWidget {
                   top: 30, left: 20, right: 20, bottom: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+                children: const [
                   Text(
                     "Perfil",
                     style: TextStyle(
@@ -34,19 +35,20 @@ class AccountPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.account_circle, size: 120, color: Colors.white),
+                  const Icon(Icons.account_circle,
+                      size: 120, color: Colors.white),
                   Text(
-                    _loginController.user.value!.name!,
-                    style: TextStyle(
+                    _controller.user.name!,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
-                    _loginController.user.value!.email!,
-                    style: TextStyle(
-                      color: Colors.white,
+                    _controller.user.email!,
+                    style: const TextStyle(
+                      color: Colors.grey,
                       fontSize: 12,
                     ),
                   ),
@@ -65,40 +67,43 @@ class AccountPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(right: 10),
-                                  child: Icon(Icons.calendar_today_sharp,
+                                  margin: const EdgeInsets.only(right: 10),
+                                  child: const Icon(Icons.calendar_today_sharp,
                                       color: Colors.white, size: 20),
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Ativo há",
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                     Text(
-                                      "115 dias",
-                                      style: TextStyle(
+                                      "${DateUtil.daysBetween(DateTime.now(), _controller.user.createdAt!)} dias",
+                                      style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w600),
                                     )
                                   ],
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(left: 30, right: 10),
-                                  child: Icon(Icons.calendar_month_outlined,
+                                  margin: const EdgeInsets.only(
+                                      left: 30, right: 10),
+                                  child: const Icon(
+                                      Icons.calendar_month_outlined,
                                       color: Colors.white),
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Registrado desde",
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                     Text(
-                                      "12/Mar/2023",
-                                      style: TextStyle(
+                                      DateUtil.formatDate('dd/MMM/yyyy',
+                                          _controller.user.createdAt!),
+                                      style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w600),
                                     )
@@ -114,7 +119,7 @@ class AccountPage extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.only(bottom: 35),
+                margin: const EdgeInsets.only(bottom: 35),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: AppColors.lightBackgroundColor,
@@ -123,14 +128,37 @@ class AccountPage extends StatelessWidget {
                   Material(
                     type: MaterialType.transparency,
                     child: InkWell(
-                      onTap: () {},
-                      borderRadius: BorderRadius.only(
+                      onTap: () => _showMessageToDelete(),
+                      borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10)),
                       child: Container(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: Row(
-                          children: [
+                          children: const [
+                            Icon(Icons.delete, color: Colors.red),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            Text(
+                              "Excluir conta",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Material(
+                    type: MaterialType.transparency,
+                    child: InkWell(
+                      onTap: () => _controller.logout(),
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        child: Row(
+                          children: const [
                             Icon(Icons.logout, color: Colors.grey),
                             SizedBox(
                               width: 25,
@@ -151,5 +179,40 @@ class AccountPage extends StatelessWidget {
             )
           ],
         )));
+  }
+
+  _showMessageToDelete() {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: AppColors.backgroundColor,
+        titleTextStyle: const TextStyle(color: Colors.white),
+        contentTextStyle: const TextStyle(color: Colors.white),
+        title: const Text('Confirmação'),
+        content: const Text(
+            'Você tem certeza de que deseja deletar sua conta? Este processo é irreversível.'),
+        actions: [
+          TextButton(
+            onPressed: () =>
+                Get.back(result: false), // User cancelled the delete operation
+            child: const Text(
+              'Cancelar',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          TextButton(
+            onPressed: () =>
+                Get.back(result: true), // User confirmed the delete operation
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
+    ).then((value) {
+      if (value != null && value) {
+        _controller.deleteUser();
+      }
+    });
   }
 }

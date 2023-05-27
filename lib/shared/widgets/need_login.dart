@@ -14,11 +14,13 @@ class NeedLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => WidgetUtil.showIf(
-          _loginController.user.value != null,
-          () => getWidget(),
-          elsif: () => _getMessage(context),
-        ));
+    return Obx(() {
+      return WidgetUtil.showIf(
+        _loginController.user.value != null,
+        () => getWidget(),
+        elsif: () => _getMessage(context),
+      );
+    });
   }
 
   Center _getMessage(BuildContext context) {
@@ -44,7 +46,7 @@ class NeedLogin extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.05,
               onTap: () => Get.toNamed(Routes.login),
-              text: 'Sign In',
+              text: 'Login',
             ),
           ],
         ),

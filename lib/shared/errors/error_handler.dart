@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:get/get.dart';
+import 'package:ml_invest_app/shared/utils/snackbar_util.dart';
 
 import 'models/app_exceptions.dart';
 
@@ -9,19 +9,21 @@ class ErrorHandler {
     print(error.toString());
     if (error is BadRequestException) {
       var message = error.details;
-      Get.snackbar('Atenção', message ?? 'Valide os campos informados.');
+      SnackbarUtil.showSnackbar(SnackbarEnum.error, 'Atenção',
+          message ?? 'Valide os campos informados.');
       return;
     } else if (error is FetchDataException) {
       var message = error.details;
       log(error.status.toString());
-      Get.snackbar(
-          'Erro', message ?? 'Infelizmente houve um problema inesperado.');
+      SnackbarUtil.showSnackbar(SnackbarEnum.error, 'Erro',
+          message ?? 'Infelizmente houve um problema inesperado.');
       return;
     } else if (error is ApiNotRespondingException) {
-      Get.snackbar('Erro', 'Houve um problema na comunicação.');
+      SnackbarUtil.showSnackbar(
+          SnackbarEnum.error, 'Erro', 'Houve um problema na comunicação.');
       return;
     }
-    Get.snackbar('Erro', 'Houve um problema ao realizar solicitação.');
+    SnackbarUtil.showSnackbar(SnackbarEnum.error, 'Erro', 'Houve um problema ao realizar solicitação.');
     return;
   }
 }

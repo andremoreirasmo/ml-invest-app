@@ -19,4 +19,25 @@ class UserService {
       return null;
     }
   }
+
+  Future<void> deleteUser(String authToken) async {
+    try {
+      await _http.request(HttpRequestEnum.delete, url, authToken: authToken);
+    } catch (error) {
+      ErrorHandler.handleError(error);
+    }
+  }
+
+  Future<bool> createUser(String name, String email, String password) async {
+    try {
+      String uri = "$url/signup";
+      await _http.request(HttpRequestEnum.post, uri,
+          body: {'name': name, 'email': email, 'password': password});
+
+      return true;
+    } catch (error) {
+      ErrorHandler.handleError(error);
+      return false;
+    }
+  }
 }

@@ -26,6 +26,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.darkGreen,
       body: SafeArea(
           child: Stack(
         children: [
@@ -35,7 +36,7 @@ class LoginPage extends StatelessWidget {
             color: AppColors.darkGreen,
           ),
           const CustomHeader(
-            text: 'Sign In',
+            text: 'Login',
           ),
           Positioned(
             top: MediaQuery.of(context).size.height * 0.08,
@@ -94,12 +95,12 @@ class LoginPage extends StatelessWidget {
                             Get.back();
                           }
                         },
-                        text: 'Sign In',
+                        text: 'Entrar',
                         isLoading: _loginController.isLogIn.value,
                       )),
                   CustomRichText(
                     discription: "Não tem uma conta ainda? ",
-                    text: "Sign Up",
+                    text: "Cadastrar",
                     onTap: () => Get.toNamed(Routes.signUp),
                   ),
                 ],

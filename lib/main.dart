@@ -6,7 +6,7 @@ import 'package:ml_invest_app/pages/history_page/history_page.dart';
 import 'package:ml_invest_app/pages/home/home_page.dart';
 import 'package:ml_invest_app/pages/login/login_page.dart';
 import 'package:ml_invest_app/pages/select_compare_stock_page/select_compare_stock_page.dart';
-import 'package:ml_invest_app/pages/signup_page.dart';
+import 'package:ml_invest_app/pages/signup/signup_page.dart';
 import 'package:ml_invest_app/pages/splash_screen/splash_screen.dart';
 import 'package:ml_invest_app/shared/styles/app_colors.dart';
 import 'package:ml_invest_app/shared/utils/material_color.dart';

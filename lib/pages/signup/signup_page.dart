@@ -1,46 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:ml_invest_app/pages/signup/signup_controller.dart';
 import 'package:ml_invest_app/shared/styles/app_colors.dart';
 import 'package:ml_invest_app/shared/widgets/custom_button.dart';
 import 'package:ml_invest_app/shared/widgets/custom_formfield.dart';
 import 'package:ml_invest_app/shared/widgets/custom_header.dart';
 import 'package:ml_invest_app/shared/widgets/password_formfield.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class SignUpPage extends StatelessWidget {
+  final SignupController _controller = Get.put(SignupController());
+  SignUpPage({Key? key}) : super(key: key);
 
-  @override
-  State<SignUpPage> createState() => _SignUpPageState();
-}
-
-class _SignUpPageState extends State<SignUpPage> {
   final _userName = TextEditingController();
+
   final _emailController = TextEditingController();
+
   final _passwordController = TextEditingController();
 
   String get userName => _userName.text.trim();
+
   String get email => _emailController.text.trim();
+
   String get password => _passwordController.text.trim();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.darkGreen,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
-          child: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: AppColors.darkGreen,
-          ),
-          const CustomHeader(
-            text: 'Sign Up',
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.08,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.9,
-              width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const CustomHeader(
+              text: 'Cadastre-se',
+            ),
+            Container(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height - 115,
+              ),
               decoration: const BoxDecoration(
                   color: AppColors.backgroundColor,
                   borderRadius: BorderRadius.only(
@@ -95,25 +94,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  PasswordFormField(
-                    headingText: "Confirme a senha",
-                    hintText: "Confirme a senha",
-                    controller: _passwordController,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
                   CustomButton(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    onTap: () {},
-                    text: 'Sign Up',
+                    height: 40,
+                    onTap: () => _controller.signUp(userName, email, password),
+                    text: 'Cadastrar',
+                    isLoading: _controller.isLoading.value,
                   ),
                 ],
               ),
-            ),
-          ),
-        ],
+            )
+          ],
+        ),
       )),
     );
   }

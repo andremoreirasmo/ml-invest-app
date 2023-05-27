@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:ml_invest_app/shared/controllers/login_controller.dart';
 import 'package:ml_invest_app/shared/models/stock_comparison_model.dart';
@@ -10,22 +12,28 @@ class HistoryController extends GetxController {
 
   var comparisons = <StockComparisonModel>[].obs;
   var isDataLoading = true.obs;
+  StreamSubscription? userSub;
 
   @override
   Future<void> onInit() async {
     super.onInit();
+
+    _stockComparisonService = StockComparisonService(_loginController.user);
+
+    userSub = _loginController.user.listen((user) => fetchData());
   }
 
   @override
   Future<void> onReady() async {
     super.onReady();
-
-    _stockComparisonService = StockComparisonService(_loginController.user);
-
-    _loginController.user.listen((user) => fetchData());
   }
 
   fetchData() async {
+    if (_loginController.user.value == null) {
+      comparisons.clear();
+      return;
+    }
+
     isDataLoading(true);
 
     var list = await _stockComparisonService!.findAll();
@@ -51,5 +59,7 @@ class HistoryController extends GetxController {
   }
 
   @override
-  void onClose() {}
+  void onClose() {
+    userSub!.cancel();
+  }
 }
