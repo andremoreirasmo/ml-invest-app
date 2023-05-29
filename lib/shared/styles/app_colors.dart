@@ -5,4 +5,5 @@ class AppColors {
   static const darkGreen = Color.fromRGBO(69, 89, 62, 1);
   static const backgroundColor = Color.fromRGBO(48, 48, 48, 1);
   static const lightBackgroundColor = Color.fromRGBO(68, 68, 68, 1);
+  static const black = Color.fromARGB(255, 22, 22, 22);
 }

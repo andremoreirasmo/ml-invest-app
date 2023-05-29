@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ml_invest_app/shared/models/stock_model.dart';
+import 'package:ml_invest_app/shared/styles/app_colors.dart';
 import 'package:ml_invest_app/shared/utils/widget_util.dart';
 import 'package:ml_invest_app/shared/widgets/chart_stock/chart_stock_enum.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -24,9 +25,9 @@ class ChartStock extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(209, 15, 15, 15),
+        color: AppColors.black,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color.fromARGB(132, 15, 15, 15)),
+        border: Border.all(color: AppColors.black),
       ),
       child: Obx(() => WidgetUtil.showLoading(
             isLoading.value,
@@ -37,11 +38,12 @@ class ChartStock extends StatelessWidget {
                       isVisible: chartData is List<StockModel>,
                       position: LegendPosition.bottom),
                   plotAreaBorderWidth: 0,
-                  backgroundColor: const Color.fromARGB(132, 15, 15, 15),
+                  backgroundColor: AppColors.black,
                   primaryXAxis: DateTimeAxis(
-                      edgeLabelPlacement: EdgeLabelPlacement.shift,
-                      majorGridLines: const MajorGridLines(width: 0),
-                      intervalType: selectedPeriod.value.chartIntervalType),
+                    edgeLabelPlacement: EdgeLabelPlacement.shift,
+                    majorGridLines: const MajorGridLines(width: 0),
+                    intervalType: selectedPeriod.value.chartIntervalType,
+                  ),
                   primaryYAxis: NumericAxis(
                     axisLine: const AxisLine(width: 0),
                     majorTickLines:
@@ -51,7 +53,7 @@ class ChartStock extends StatelessWidget {
                   series: _getSeries(),
                 ),
                 Container(
-                  color: const Color.fromARGB(132, 15, 15, 15),
+                  color: AppColors.black,
                   child: Obx(() => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: ChartPeriodEnum.values
