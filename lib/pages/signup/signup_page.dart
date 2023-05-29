@@ -27,19 +27,20 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.darkGreen,
+      appBar: const CustomAppBar(
+        title: 'Cadastre-se',
+      ),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
           child: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
-            const CustomHeader(
-              text: 'Cadastre-se',
+            Container(
+              color: AppColors.darkGreen,
+              height: 100,
             ),
             Container(
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height - 115,
-              ),
+              margin: const EdgeInsets.only(top: 8),
               decoration: const BoxDecoration(
                   color: AppColors.backgroundColor,
                   borderRadius: BorderRadius.only(
@@ -100,6 +101,9 @@ class SignUpPage extends StatelessWidget {
                     onTap: () => _controller.signUp(userName, email, password),
                     text: 'Cadastrar',
                     isLoading: _controller.isLoading.value,
+                  ),
+                  const SizedBox(
+                    height: 16,
                   ),
                 ],
               ),

@@ -26,28 +26,24 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.darkGreen,
+      appBar: const CustomAppBar(
+        title: 'Login',
+      ),
       body: SafeArea(
-          child: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: AppColors.darkGreen,
-          ),
-          const CustomHeader(
-            text: 'Login',
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.08,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.9,
-              width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              color: AppColors.darkGreen,
+              height: 100,
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 8),
               decoration: const BoxDecoration(
                   color: AppColors.backgroundColor,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40))),
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -103,11 +99,14 @@ class LoginPage extends StatelessWidget {
                     text: "Cadastrar",
                     onTap: () => Get.toNamed(Routes.signUp),
                   ),
+                  const SizedBox(
+                    height: 16,
+                  ),
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       )),
     );
   }
