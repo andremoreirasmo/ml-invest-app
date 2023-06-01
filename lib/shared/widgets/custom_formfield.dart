@@ -9,6 +9,7 @@ class CustomFormField extends StatelessWidget {
   final TextInputAction textInputAction;
   final TextEditingController controller;
   final int maxLines;
+  final ValueChanged<String>? onSubmitted;
 
   const CustomFormField(
       {Key? key,
@@ -19,7 +20,8 @@ class CustomFormField extends StatelessWidget {
       required this.textInputType,
       required this.textInputAction,
       required this.controller,
-      required this.maxLines})
+      required this.maxLines,
+      this.onSubmitted})
       : super(key: key);
 
   @override
@@ -63,6 +65,7 @@ class CustomFormField extends StatelessWidget {
                       fontWeight: FontWeight.w500),
                   border: InputBorder.none,
                   suffixIcon: suffixIcon),
+              onSubmitted: onSubmitted,
             ),
           ),
         )

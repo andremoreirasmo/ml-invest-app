@@ -67,7 +67,7 @@ class SignUpPage extends StatelessWidget {
                     obsecureText: false,
                     suffixIcon: const SizedBox(),
                     maxLines: 1,
-                    textInputAction: TextInputAction.done,
+                    textInputAction: TextInputAction.next,
                     textInputType: TextInputType.text,
                     controller: _userName,
                   ),
@@ -80,7 +80,7 @@ class SignUpPage extends StatelessWidget {
                     obsecureText: false,
                     suffixIcon: const SizedBox(),
                     maxLines: 1,
-                    textInputAction: TextInputAction.done,
+                    textInputAction: TextInputAction.next,
                     textInputType: TextInputType.emailAddress,
                     controller: _emailController,
                   ),
@@ -91,6 +91,7 @@ class SignUpPage extends StatelessWidget {
                     headingText: "Senha",
                     hintText: "Pelo menos 8 caracteres",
                     controller: _passwordController,
+                    onSubmitted: (_) => _signUp(),
                   ),
                   const SizedBox(
                     height: 16,
@@ -98,7 +99,7 @@ class SignUpPage extends StatelessWidget {
                   CustomButton(
                     width: MediaQuery.of(context).size.width,
                     height: 40,
-                    onTap: () => _controller.signUp(userName, email, password),
+                    onTap: () => _signUp(),
                     text: 'Cadastrar',
                     isLoading: _controller.isLoading.value,
                   ),
@@ -113,4 +114,6 @@ class SignUpPage extends StatelessWidget {
       )),
     );
   }
+
+  _signUp() => _controller.signUp(userName, email, password);
 }

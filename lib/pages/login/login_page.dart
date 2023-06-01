@@ -66,7 +66,7 @@ class LoginPage extends StatelessWidget {
                     suffixIcon: const SizedBox(),
                     controller: _emailController,
                     maxLines: 1,
-                    textInputAction: TextInputAction.done,
+                    textInputAction: TextInputAction.next,
                     textInputType: TextInputType.emailAddress,
                   ),
                   const SizedBox(
@@ -76,6 +76,7 @@ class LoginPage extends StatelessWidget {
                     headingText: "Senha",
                     hintText: "Pelo menos 8 caracteres",
                     controller: _passwordController,
+                    onSubmitted: (_) => _login(),
                   ),
                   const SizedBox(
                     height: 16,
@@ -83,14 +84,7 @@ class LoginPage extends StatelessWidget {
                   Obx(() => CustomButton(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.05,
-                        onTap: () async {
-                          var result =
-                              await _loginController.login(email, password);
-
-                          if (result) {
-                            Get.back();
-                          }
-                        },
+                        onTap: _login,
                         text: 'Entrar',
                         isLoading: _loginController.isLogIn.value,
                       )),
@@ -109,5 +103,13 @@ class LoginPage extends StatelessWidget {
         ),
       )),
     );
+  }
+
+  _login() async {
+    var result = await _loginController.login(email, password);
+
+    if (result) {
+      Get.back();
+    }
   }
 }
