@@ -1,4 +1,4 @@
-package com.example.ml_invest_app
+package com.andremoreira.ml_invest_app
 
 import io.flutter.embedding.android.FlutterActivity
 
