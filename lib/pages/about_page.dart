@@ -32,10 +32,6 @@ class AboutPage extends StatelessWidget {
                 "Bem-vindo ao ML Invest, nosso aplicativo inovador de previsão de tendências de ações! Aqui, gostaríamos de apresentar o trabalho de TCC desenvolvido na Faculdade da UNOESC, que resultou neste aplicativo de código aberto que está diante de você.",
                 style: TextStyle(color: Colors.grey),
               ),
-              const Text(
-                "Bem-vindo ao ML Invest, nosso aplicativo inovador de previsão de tendências de ações! Aqui, gostaríamos de apresentar o trabalho de TCC desenvolvido na Faculdade da UNOESC, que resultou neste aplicativo de código aberto que está diante de você.",
-                style: TextStyle(color: Colors.grey),
-              ),
               _getSector("Nossa Missão",
                   "Nosso objetivo ao criar o ML Invest foi fornecer aos usuários acesso a previsões confiáveis sobre a tendência de ações específicas do mercado brasileiro. Utilizando técnicas avançadas de aprendizado de máquina, geramos modelos usando Python e a arquitetura LSTM (Long Short-Term Memory). Esses modelos foram treinados com dados abrangentes de variação de preços, incluindo informações como valores de abertura, fechamento, média, entre outros."),
               _getSector("Como Funciona",
