@@ -22,7 +22,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       color: AppColors.darkGreen,
       child: SafeArea(
         child: Container(
-          margin: const EdgeInsets.only(top: 16, left: 16, bottom: 16),
+          margin: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
