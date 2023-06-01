@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ml_invest_app">
+    package="com.andremoreira.ml_invest_app">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="ML Invest"
